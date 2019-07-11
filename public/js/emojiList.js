@@ -1,4 +1,5 @@
-const emojiList = ["😀",
+const emojiList = [
+    "😀",
     "#e1b445",
     "😁",
     "#e5b849",
