@@ -67,7 +67,7 @@ class testGD
             }
             $this->fullColor[] = ['r' => floor(sqrt($r/$num)), 'g' => floor(sqrt($g/$num)), 'b' => floor(sqrt($b/$num))];
         }
-        var_dump($this->fullColor);
+
         return $this->fullColor;
     }
 
