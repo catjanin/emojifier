@@ -10,65 +10,26 @@ class testGD
     public function test()
     {
         $userSample = 7;
+        $fullRGBarr = [];
 
         $image = imagecreatefromjpeg('slim-small-red.jpg');
         $imageSize = getimagesize('slim-small-red.jpg');
         $width = $imageSize[0]-1;
-        $height = $imageSize[1]-1;
 
         $sampleSize = $this->roundSample($userSample, $width);
 
-        $totalPixels = $width*$height;
-
-        $yBlock = 0;
-        $xBlock = 0;
-
-        for ($i = 0; $i < $totalPixels/($sampleSize*$sampleSize); $i++) {
-
-            $r = 0;
-            $g = 0;
-            $b = 0;
-
-            $x = $xBlock;
-            $y = $yBlock;
-
-            $num = 0;
-
-            for ($u = 0; $u < $sampleSize*$sampleSize; $u++) {
-
-                $rgb = $this->pickColor($image, $x, $y);
-                $r += $rgb['red'] * $rgb['red'];
-                $g += $rgb['green'] * $rgb['green'];
-                $b += $rgb['blue'] * $rgb['blue'];
-
-                $x++;
-                $num++;
-
-                if ($x === $width) {
-                    $rgb = $this->pickColor($image, $x, $y);
-                    $r += $rgb['red'] * $rgb['red'];
-                    $g += $rgb['green'] * $rgb['green'];
-                    $b += $rgb['blue'] * $rgb['blue'];
-                }
-
-                if ($x % $sampleSize === 0) {
-                    $y++;
-                    $x = $xBlock;
-                    if ($y % $sampleSize === 0) {
-                        $xBlock += $sampleSize;
+        for ($i = 0; $i < $width-1; $i += $sampleSize) {
+            for ($j = 0; $j < $width-1; $j += $sampleSize) {
+                $square = [];
+                for ($k = $i; $k < $i + $sampleSize; $k++) {
+                    for ($l = $j; $l < $j + $sampleSize; $l++) {
+                        $square[] = $this->pickColor($image, $k, $l);
                     }
                 }
-
-                if ($y === $yBlock + $sampleSize-1 && $x === $width) {
-                    $yBlock += $sampleSize;
-                    $xBlock = 0;
-                    break;
-                }
+                $fullRGBarr[] = $square;
             }
-            $this->fullColor[] = ['r' => floor(sqrt($r/$num)), 'g' => floor(sqrt($g/$num)), 'b' => floor(sqrt($b/$num))];
         }
-
-        return $this->fullColor;
+        $this->convertToHex($fullRGBarr);
     }
 
 
@@ -93,7 +54,30 @@ class testGD
         return $trueSample;
     }
 
-    public function getFullColor()
+    public function convertToHex($arr)
+    {
+        var_dump($arr);
+        foreach($arr as $key => $rgb){
+
+            $rgb['red'] = dechex($rgb['red']);
+            if (strlen($rgb['red'])<2)
+                $rgb['red'] = '0'.$rgb['red'];
+
+            $rgb['green'] = dechex($rgb['green']);
+            if (strlen($rgb['green'])<2)
+                $rgb['green'] = '0'.$rgb['green'];
+
+            $rgb['blue'] = dechex($rgb['blue']);
+            if (strlen($rgb['blue'])<2)
+                $rgb['blue'] = '0'.$rgb['blue'];
+
+            $arr[$key] = '#' . $rgb['red'] . $rgb['green'] . $rgb['blue'];
+        }
+
+        var_dump($arr);
+    }
+
+    public function getFullColors()
     {
         return $this->fullColor;
     }
