@@ -20,17 +20,26 @@ class testGD
 
         for ($i = 0; $i < $width-1; $i += $sampleSize) {
             for ($j = 0; $j < $width-1; $j += $sampleSize) {
-                $square = [];
+                $num = 0;
+                $r = 0;
+                $g = 0;
+                $b = 0;
                 for ($k = $i; $k < $i + $sampleSize; $k++) {
                     for ($l = $j; $l < $j + $sampleSize; $l++) {
-                        $square[] = $this->pickColor($image, $k, $l);
+                        $rgb = $this->pickColor($image, $k, $l);
+                        $r += $rgb['red'] * $rgb['red'];
+                        $g += $rgb['green'] * $rgb['green'];
+                        $b += $rgb['blue'] * $rgb['blue'];
+                        $num++;
                     }
                 }
-                $fullRGBarr[] = $square;
+                $fullRGBarr[] = ['red' => floor(sqrt($r/$num)), 'green' => floor(sqrt($g/$num)), 'blue' => floor(sqrt($b/$num))];
             }
         }
+        //var_dump($fullRGBarr);
         $this->convertToHex($fullRGBarr);
     }
+
 
 
     public function pickColor($image, $x, $y)
@@ -56,7 +65,6 @@ class testGD
 
     public function convertToHex($arr)
     {
-        var_dump($arr);
         foreach($arr as $key => $rgb){
 
             $rgb['red'] = dechex($rgb['red']);
