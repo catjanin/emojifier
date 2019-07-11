@@ -12,10 +12,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(testGD $queryImg) :Response
+    public function index() :Response
     {
-        $queryImg->test();
-        $image = $queryImg->getFullColors();
-        return $this->render('home/index.html.twig', ['image' => $image]);
+        return $this->render('home/index.html.twig');
     }
 }

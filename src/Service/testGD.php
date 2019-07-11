@@ -6,17 +6,22 @@ class testGD
 {
 
     public $fullColor = [];
+    public $fullInfo = [];
 
     public function test()
     {
-        $userSample = 7;
+        $userSample = 4;
         $fullRGBarr = [];
 
-        $image = imagecreatefromjpeg('slim-small-red.jpg');
-        $imageSize = getimagesize('slim-small-red.jpg');
+        $image = imagecreatefromjpeg('link.jpg');
+        $imageSize = getimagesize('link.jpg');
         $width = $imageSize[0]-1;
-
+        $height = $imageSize[1]-1;
         $sampleSize = $this->roundSample($userSample, $width);
+
+        $this->fullInfo['width'] = round($width/$sampleSize);
+        $this->fullInfo['height'] = round($height/$sampleSize);
+        $this->fullInfo['sampleSize'] = $sampleSize;
 
         for ($i = 0; $i < $width-1; $i += $sampleSize) {
             for ($j = 0; $j < $width-1; $j += $sampleSize) {
@@ -36,11 +41,8 @@ class testGD
                 $fullRGBarr[] = ['red' => floor(sqrt($r/$num)), 'green' => floor(sqrt($g/$num)), 'blue' => floor(sqrt($b/$num))];
             }
         }
-        //var_dump($fullRGBarr);
         $this->convertToHex($fullRGBarr);
     }
-
-
 
     public function pickColor($image, $x, $y)
     {
@@ -82,12 +84,17 @@ class testGD
             $arr[$key] = '#' . $rgb['red'] . $rgb['green'] . $rgb['blue'];
         }
 
-        var_dump($arr);
+        $this->fullColor = $arr;
     }
 
     public function getFullColors()
     {
         return $this->fullColor;
+    }
+
+    public function getFullInfo()
+    {
+        return $this->fullInfo;
     }
 
 }
