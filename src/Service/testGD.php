@@ -10,35 +10,42 @@ class testGD
 
     public function test()
     {
-        $userSample = 4;
+        $userSample = 40;
         $fullRGBarr = [];
 
-        $image = imagecreatefromjpeg('link.jpg');
-        $imageSize = getimagesize('link.jpg');
+        $src = 'l.jpg';
+        $image = imagecreatefromjpeg($src);
+        $imageSize = getimagesize($src);
         $width = $imageSize[0]-1;
         $height = $imageSize[1]-1;
         $sampleSize = $this->roundSample($userSample, $width);
 
         $this->fullInfo['width'] = round($width/$sampleSize);
         $this->fullInfo['height'] = round($height/$sampleSize);
+        $this->fullInfo['fullWidth'] = $width;
+        $this->fullInfo['fullHeight'] = $height;
         $this->fullInfo['sampleSize'] = $sampleSize;
 
-        for ($i = 0; $i < $width-1; $i += $sampleSize) {
-            for ($j = 0; $j < $width-1; $j += $sampleSize) {
+        for ($i = 0; $i < $width; $i += $sampleSize) {
+            for ($j = 0; $j < $height; $j += $sampleSize) {
                 $num = 0;
                 $r = 0;
                 $g = 0;
                 $b = 0;
                 for ($k = $i; $k < $i + $sampleSize; $k++) {
                     for ($l = $j; $l < $j + $sampleSize; $l++) {
-                        $rgb = $this->pickColor($image, $k, $l);
-                        $r += $rgb['red'] * $rgb['red'];
-                        $g += $rgb['green'] * $rgb['green'];
-                        $b += $rgb['blue'] * $rgb['blue'];
-                        $num++;
+                        if($k < $width && $l < $height){
+                            $rgb = $this->pickColor($image, $k, $l);
+                            $r += $rgb['red'] * $rgb['red'];
+                            $g += $rgb['green'] * $rgb['green'];
+                            $b += $rgb['blue'] * $rgb['blue'];
+                            $num++;
+                        }
                     }
                 }
-                $fullRGBarr[] = ['red' => floor(sqrt($r/$num)), 'green' => floor(sqrt($g/$num)), 'blue' => floor(sqrt($b/$num))];
+                if($num > 0){
+                    $fullRGBarr[] = ['red' => round(sqrt($r/$num)), 'green' => round(sqrt($g/$num)), 'blue' => round(sqrt($b/$num))];
+                }
             }
         }
         $this->convertToHex($fullRGBarr);
