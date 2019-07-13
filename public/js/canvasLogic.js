@@ -1,32 +1,39 @@
-console.log(emojiList);
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
 
 document.getElementById('createImage').addEventListener('click', () => {
-    sendRequest();
+    let emojisize = document.getElementById('form_emoji_size').value;
+    let image = document.getElementById('form_image_file').files[0];
+
+    let file = new FormData();
+    file.append('image', image);
+    file.append('size', emojisize);
+    console.log(image);
+    sendRequest(emojisize, file);
 });
 
-function sendRequest(){
-    var xhr = new XMLHttpRequest();
+function sendRequest(emojisize, image){
 
-    xhr.onload = function () {
+    fetch("/sendRequest", {
+        method: "POST",
+        body: image
+    }).then((response)=>{
+        return response.text();
+    }).then((text)=>{
+        console.log(text);
+        getTheEmojis(JSON.parse(text));
+    }).catch((error)=>{
+        console.log(error);
+    })
 
-        // Process our return data
-        if (xhr.status >= 200 && xhr.status < 300) {
-            // What do when the request is successful
-            //console.log(JSON.parse(xhr.response))
-            console.log(JSON.parse(xhr.response));
-            getTheEmojis(JSON.parse(xhr.response))
-
-        } else {
-            // What do when the request fails
-            console.log('The request failed!');
-        }
-
-        // Code that should run regardless of the request status
-        console.log('This always runs...');
-    };
-
-    xhr.open('POST', '/sendRequest');
-    xhr.send(null);
 }
 
 function getTheEmojis(imageInfo){
@@ -43,6 +50,14 @@ function getTheEmojis(imageInfo){
 }
 
 function createCanvas(imageInfo, corEmojis){
+
+    let oldCanvas = document.getElementById('lecanvas')
+
+    if (typeof(oldCanvas) != 'undefined' && oldCanvas != null)
+    {
+        document.getElementById("lecanvas").remove();
+    }
+
     let canvas = document.createElement('canvas');
 
     canvas.id = "lecanvas";

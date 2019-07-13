@@ -8,12 +8,12 @@ class testGD
     public $fullColor = [];
     public $fullInfo = [];
 
-    public function test()
+    public function test($requiredSample, $fileName)
     {
-        $userSample = 40;
+        $userSample = $requiredSample;
         $fullRGBarr = [];
 
-        $src = 'l.jpg';
+        $src = 'uploads/'.$fileName;
         $image = imagecreatefromjpeg($src);
         $imageSize = getimagesize($src);
         $width = $imageSize[0]-1;
@@ -61,13 +61,14 @@ class testGD
 
     public function roundSample($userSample, $width)
     {
-        $trueSample = 0;
+        $trueSample = $userSample;
+        /*
         for ($i = $userSample; $i < $width; $i++) {
             if (($width+1) % $i === 0) {
                 $trueSample = $i;
                 break;
             }
-        }
+        }*/
 
         return $trueSample;
     }

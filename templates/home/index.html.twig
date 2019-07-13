@@ -2,8 +2,9 @@
 {% block body %}
     <h1>Hello</h1>
     <button id="createImage">create image</button>
+{{ form_widget(form.emoji_size, {'type':'number'}) }}
+    {{ form_widget(form.image_file) }}
 
-    </canvas>
 {% endblock %}
 {% block javascripts %}
     <script src="js/nearestColor.js"></script>
