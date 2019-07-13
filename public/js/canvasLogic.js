@@ -12,26 +12,38 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 document.getElementById('createImage').addEventListener('click', () => {
     let emojisize = document.getElementById('form_emoji_size').value;
     let image = document.getElementById('form_image_file').files[0];
+    let algo2 = document.getElementById('form_algo_2');
+    let algo;
 
     let file = new FormData();
     file.append('image', image);
     file.append('size', emojisize);
+    if(algo2.checked){
+        file.append('algo', 'algo_2');
+        algo = 2;
+    }else{
+        file.append('algo', 'algo_1');
+        algo = 1;
+    }
     console.log(image);
-    sendRequest(emojisize, file);
+    sendRequest(file, algo);
 });
 
-function sendRequest(emojisize, image){
+function sendRequest(file, algo){
+    console.log(file);
 
     fetch("/sendRequest", {
         method: "POST",
-        body: image
+        body: file
     }).then((response)=>{
         return response.text();
-    }).then((text)=>{
-        console.log(text);
-        getTheEmojis(JSON.parse(text));
-    }).catch((error)=>{
-        console.log(error);
+    }).then((res)=>{
+        console.log(res);
+        if(algo === 1){
+            getTheEmojis(JSON.parse(res));
+        }else{
+            createCanvas(JSON.parse(res))
+        }
     })
 
 }
@@ -49,7 +61,8 @@ function getTheEmojis(imageInfo){
     createCanvas(imageInfo, corEmojis);
 }
 
-function createCanvas(imageInfo, corEmojis){
+function createCanvas(imageInfo, corEmojis = null){
+    console.log(imageInfo);
 
     let oldCanvas = document.getElementById('lecanvas')
 
@@ -68,21 +81,39 @@ function createCanvas(imageInfo, corEmojis){
     let body = document.getElementsByTagName("body")[0];
     body.appendChild(canvas);
 
-    drawStuff(corEmojis, imageInfo.info)
+    if(corEmojis === null){
+        drawStuff(imageInfo)
+    }else{
+        drawStuff(imageInfo.info, corEmojis)
+    }
 }
 
-function drawStuff(corEmojis, info){
+function drawStuff(info, corEmojis = null){
     var canvas = document.getElementById("lecanvas");
     var ctx = canvas.getContext("2d");
     ctx.font = info.sampleSize + "px Arial";
+
+    let drawEmojis;
+    let imageInfo;
+
+    if (corEmojis === null) {
+        drawEmojis = info.emojis;
+        imageInfo = info.info;
+    } else {
+        imageInfo = info;
+        drawEmojis = corEmojis;
+    }
+
+    //console.log(info.info);
+
     let x = 0;
     let y = 0;
-    corEmojis.forEach((v, i)=>{
-        ctx.fillText(v, x-info.sampleSize, y);
-        if(i % info.height === 0){
+    drawEmojis.forEach((v, i)=>{
+        ctx.fillText(v, x-Number(imageInfo.sampleSize), y);
+        if(i % Number(imageInfo.height) === 0){
             y = 0;
-            x += info.sampleSize;
+            x += Number(imageInfo.sampleSize);
         }
-        y += info.sampleSize;
+        y += Number(imageInfo.sampleSize);
     })
 }

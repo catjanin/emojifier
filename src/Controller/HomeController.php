@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,9 @@ class HomeController extends AbstractController
             ->add('image_file', FileType::class, [
                 'mapped' => false,
                 'label' => 'choose image'
+            ])
+            ->add('algo_2', CheckboxType::class, [
+                'label' => 'algo 2'
             ])
             ->getForm();
 

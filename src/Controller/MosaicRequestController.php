@@ -20,6 +20,7 @@ class MosaicRequestController extends AbstractController
 
         //$post = json_decode($request->getContent('size'));
         $requiredSample = $_POST['size'];
+        $requiredAlgo = $_POST['algo'];
 
         $file = $_FILES['image'];
 
@@ -37,50 +38,65 @@ class MosaicRequestController extends AbstractController
         move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);
 
 
-        return $this->requireEmojification($requiredSample, $file['name']);
+        return $this->requireEmojification($requiredSample, $file['name'], $requiredAlgo);
 
     }
 
-    public function requireEmojification($requiredSample, $fileName) :Response
+    public function requireEmojification($requiredSample, $fileName, $requiredAlgo) :Response
     {
-        $queryImg = new testGD();
+        $image = [];
         $emojis = new EmojiList();
+        $queryImg = new testGD();
         $closestColor = new ClosestColor();
 
-        $image = [];
-        $queryImg->test(intval($requiredSample), $fileName);
-        $image['colors'] = $queryImg->getFullColors();
-        $info = $queryImg->getFullInfo();
-        $image['info'] = $info;
 
+        if($requiredAlgo === 'algo_1'){
 
-        $emojiToUse = [];
-        $emojiList = $emojis->getEmojis();
+            $queryImg->test(intval($requiredSample), $fileName);
+            $image['colors'] = $queryImg->getFullColors();
+            $info = $queryImg->getFullInfo();
+            $image['info'] = $info;
+        }
 
-        $emojiColors = array_filter($emojiList, function($e){
-            if (strlen($e) === 7 && $e[0] === "#") {
-                return $e;
+        if($requiredAlgo === 'algo_2') {
+
+            $emojiToUse = [];
+            $queryImg->test(intval($requiredSample), $fileName);
+            $emojiList = $emojis->getEmojis();
+            $imageColors = $queryImg->getFullColors();
+
+            $emojiColors = array_filter($emojiList, function ($e) {
+                if (strlen($e) === 7 && $e[0] === "#") {
+                    return $e;
+                }
+            });
+
+            foreach ($emojiColors as $key => $val) {
+                $emojiColors[$key] = substr($val, 1);
             }
-        });
 
-        foreach ($emojiColors as $key => $val) {
-            $emojiColors[$key] = substr($val, 1);
+            foreach ($imageColors as $key => $val) {
+                $imageColors[$key] = substr($val, 1);
+            }
+
+            foreach ($imageColors as $key => $val) {
+                $closest = $closestColor->NearestColor($val, $emojiColors);
+                $emojiToUse[] = $emojiList[array_search('#' . $closest, $emojiList) - 1];
+            }
+
+            $image['emojis'] = $emojiToUse;
+            $queryImg->createFullInfo($fileName, $requiredSample);
+            $info = $queryImg->getFullInfo();
+            $image['info'] = $info;
+
+            //var_dump($image); die;
+
         }
-
-        foreach ($image['colors'] as $key => $val) {
-            $imageColors[$key] = substr($val, 1);
-        }
-
-        foreach ($image['colors'] as $key => $val) {
-            $closest = $closestColor->NearestColor($val, $emojiColors);
-            $emojiToUse[] = $emojiList[array_search('#'.$closest, $emojiList)-1];
-        }
-
-        var_dump($emojiToUse); die;
 
         $response = new Response(json_encode($image));
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+
     }
 }

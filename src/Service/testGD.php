@@ -105,4 +105,21 @@ class testGD
         return $this->fullInfo;
     }
 
+    public function createFullInfo($fileName, $requiredSample)
+    {
+        $src = 'uploads/'.$fileName;
+        imagecreatefromjpeg($src);
+        $imageSize = getimagesize($src);
+        $width = $imageSize[0]-1;
+        $height = $imageSize[1]-1;
+
+        $sampleSize = $this->roundSample($requiredSample, $width);
+
+        $this->fullInfo['width'] = round($width/$sampleSize);
+        $this->fullInfo['height'] = round($height/$sampleSize);
+        $this->fullInfo['fullWidth'] = $width;
+        $this->fullInfo['fullHeight'] = $height;
+        $this->fullInfo['sampleSize'] = $sampleSize;
+    }
+
 }

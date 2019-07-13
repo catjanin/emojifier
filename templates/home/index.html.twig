@@ -4,6 +4,8 @@
     <button id="createImage">create image</button>
 {{ form_widget(form.emoji_size, {'type':'number'}) }}
     {{ form_widget(form.image_file) }}
+    {{ form_label(form.algo_2) }}
+    {{ form_widget(form.algo_2) }}
 
 {% endblock %}
 {% block javascripts %}

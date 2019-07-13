@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/config/bootstrap.php';
 
+ini_set('max_execution_time', 3000);
+set_time_limit(3000);
+
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 
