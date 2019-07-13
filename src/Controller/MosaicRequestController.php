@@ -77,10 +77,7 @@ class MosaicRequestController extends AbstractController
 
             foreach ($imageColors as $key => $val) {
                 $imageColors[$key] = substr($val, 1);
-            }
-
-            foreach ($imageColors as $key => $val) {
-                $closest = $closestColor->NearestColor($val, $emojiColors);
+                $closest = $closestColor->NearestColor($imageColors[$key], $emojiColors);
                 $emojiToUse[] = $emojiList[array_search('#' . $closest, $emojiList) - 1];
             }
 
