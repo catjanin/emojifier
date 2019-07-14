@@ -15,20 +15,18 @@ class MosaicRequestController extends AbstractController
     /**
      * @Route("/sendRequest", name="sendRequest")
      */
-    public function index(Request $request)
+    public function index()
     {
 
         //$post = json_decode($request->getContent('size'));
         $requiredSample = $_POST['size'];
         $requiredAlgo = $_POST['algo'];
-
         $file = $_FILES['image'];
 
         $arr_file_types = ['image/jpg', 'image/jpeg'];
 
         if (!(in_array($file['type'], $arr_file_types))) {
-            echo "false";
-            return 'lol';
+            return null;
         }
 
         if (!file_exists('uploads')) {
@@ -76,17 +74,13 @@ class MosaicRequestController extends AbstractController
             }
 
             foreach ($imageColors as $key => $val) {
-                $imageColors[$key] = substr($val, 1);
-                $closest = $closestColor->NearestColor($imageColors[$key], $emojiColors);
+                $closest = $closestColor->NearestColor(substr($val, 1), $emojiColors);
                 $emojiToUse[] = $emojiList[array_search('#' . $closest, $emojiList) - 1];
             }
 
             $image['emojis'] = $emojiToUse;
-            $queryImg->createFullInfo($fileName, $requiredSample);
             $info = $queryImg->getFullInfo();
             $image['info'] = $info;
-
-            //var_dump($image); die;
 
         }
 

@@ -16,8 +16,8 @@ class testGD
         $src = 'uploads/'.$fileName;
         $image = imagecreatefromjpeg($src);
         $imageSize = getimagesize($src);
-        $width = $imageSize[0]-1;
-        $height = $imageSize[1]-1;
+        $width = $imageSize[0];
+        $height = $imageSize[1];
         $sampleSize = $this->roundSample($userSample, $width);
 
         $this->fullInfo['width'] = round($width/$sampleSize);

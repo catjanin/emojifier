@@ -2,22 +2,26 @@ Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
+    for(let i = this.length - 1; i >= 0; i--) {
         if(this[i] && this[i].parentElement) {
             this[i].parentElement.removeChild(this[i]);
         }
     }
 }
 
+let drawnSamples;
+
 document.getElementById('createImage').addEventListener('click', () => {
     let emojisize = document.getElementById('form_emoji_size').value;
     let image = document.getElementById('form_image_file').files[0];
     let algo2 = document.getElementById('form_algo_2');
+    let drawnSamplesCheckbox = document.getElementById('form_x4_samples');
     let algo;
 
     let file = new FormData();
     file.append('image', image);
     file.append('size', emojisize);
+
     if(algo2.checked){
         file.append('algo', 'algo_2');
         algo = 2;
@@ -25,6 +29,13 @@ document.getElementById('createImage').addEventListener('click', () => {
         file.append('algo', 'algo_1');
         algo = 1;
     }
+
+    if(drawnSamplesCheckbox.checked){
+        drawnSamples = 'multi';
+    }else{
+        drawnSamples = 'one';
+    }
+
     console.log(image);
     sendRequest(file, algo);
 });
@@ -89,8 +100,8 @@ function createCanvas(imageInfo, corEmojis = null){
 }
 
 function drawStuff(info, corEmojis = null){
-    var canvas = document.getElementById("lecanvas");
-    var ctx = canvas.getContext("2d");
+    let canvas = document.getElementById("lecanvas");
+    let ctx = canvas.getContext("2d");
     ctx.font = info.sampleSize + "px Arial";
 
     let drawEmojis;
@@ -104,16 +115,44 @@ function drawStuff(info, corEmojis = null){
         drawEmojis = corEmojis;
     }
 
-    //console.log(info.info);
+    if (drawnSamples === 'multi') {
+        for (let u = 0; u < 5; u++) {
 
-    let x = 0;
-    let y = 0;
-    drawEmojis.forEach((v, i)=>{
-        ctx.fillText(v, x-Number(imageInfo.sampleSize), y);
-        if(i % Number(imageInfo.height) === 0){
-            y = 0;
-            x += Number(imageInfo.sampleSize);
+            let offsetX = 0;
+            let offsetY = 0;
+
+            let x = 0;
+            let y = 0;
+
+            if (u === 0) offsetX = 1;
+            if (u === 1) offsetX = -1;
+            if (u === 2) offsetY = 1;
+            if (u === 3) offsetY = -1;
+            if (u === 4) {
+                offsetY = 0;
+                offsetX = 0;
+            }
+
+            draw(x, y, offsetX, offsetY)
         }
-        y += Number(imageInfo.sampleSize);
-    })
+    }
+    else if (drawnSamples === 'one') {
+
+        let offsetX = 0;
+        let offsetY = 0;
+        let x = 0;
+        let y = 0;
+        draw(x, y, offsetX, offsetY)
+    }
+
+    function draw(x, y, offsetX, offsetY) {
+        drawEmojis.forEach((v, i)=>{
+            if(i % Number(imageInfo.height) === 0){
+                y = offsetY;
+                x += Number(imageInfo.sampleSize) + offsetX;
+            }
+            y += Number(imageInfo.sampleSize) + offsetX;
+            ctx.fillText(v, x - Number(imageInfo.sampleSize) + offsetX, y + offsetY);
+        })
+    }
 }

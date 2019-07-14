@@ -31,10 +31,15 @@ class HomeController extends AbstractController
             ])
             ->add('image_file', FileType::class, [
                 'mapped' => false,
-                'label' => 'choose image'
+                'label' => 'choose image (jpg)'
             ])
             ->add('algo_2', CheckboxType::class, [
-                'label' => 'algo 2'
+                'label' => 'algo 2',
+                'required' => false
+            ])
+            ->add('x4_samples', CheckboxType::class, [
+                'label' => '5x samples',
+                'required' => false
             ])
             ->getForm();
 
