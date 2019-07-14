@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
 {% block body %}
+    {% include '_navbar.html.twig' %}
     <h1>Hello</h1>
-    <button id="createImage">create image</button>
+    <button class="btn btn-primary" id="createImage">create image</button>
 {{ form_widget(form.emoji_size, {'type':'number'}) }}
     {{ form_widget(form.image_file) }}
     {{ form_label(form.algo_2) }}

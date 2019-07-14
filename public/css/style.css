@@ -1,0 +1,12 @@
+:root {
+    --main-bg-color: #2A1B3D;
+    --main-accent-color: #D83F87;
+}
+
+body {
+    background-color: var(--main-bg-color);
+}
+
+canvas {
+    background-color: #fff;
+}

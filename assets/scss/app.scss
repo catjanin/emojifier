@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+
+$bg_color: #2A1B3D;
+$main_accent_color: #D83F87;
+
+
+body {
+    background-color: $bg_color;
+}
+
+canvas {
+    background-color: #fff;
+}
