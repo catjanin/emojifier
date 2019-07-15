@@ -1,13 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
+@import "home";
+@import "navbar";
+@import "dragdrop";
 
-$bg_color: #2A1B3D;
-$main_accent_color: #D83F87;
-
-
-body {
-    background-color: $bg_color;
+li {
+  list-style-type: none;
 }
 
-canvas {
-    background-color: #fff;
-}
+
+
+
+
+
+

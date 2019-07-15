@@ -1,0 +1,36 @@
+@import "_vars";
+
+.navbar {
+  height: 6vh;
+}
+
+.navbar_bg {
+  background-color: $main_accent_color;
+}
+
+.navbar_bg a {
+  color: white;
+}
+
+.btn_fixed {
+  background-color: $fuschia;
+  margin-right: 25px;
+  width: 140px;
+  height: 40px;
+  color: white;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.50);
+  font-size: 120%;
+  transition: box-shadow 0.6s;
+}
+
+.btn_fixed:hover {
+  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.50);
+  transition: box-shadow 0.5s;
+}
+
+.btn_fixed:active {
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+  transition: box-shadow 0.5s;
+}

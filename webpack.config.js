@@ -24,6 +24,10 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+    .addEntry('canvasLogic', './assets/js/canvasLogic.js')
+    .addEntry('numInc', './assets/js/numInc.js')
+    .addEntry('emojiList', './assets/js/emojiList.js')
+    .addEntry('nearestColor', './assets/js/nearestColor.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

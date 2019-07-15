@@ -4,18 +4,75 @@
 {% endblock %}
 {% block body %}
     {% include '_navbar.html.twig' %}
-    <h1>Hello</h1>
-    <button class="btn btn-primary" id="createImage">create image</button>
-{{ form_widget(form.emoji_size, {'type':'number'}) }}
-    {{ form_widget(form.image_file) }}
-    {{ form_label(form.algo_2) }}
-    {{ form_widget(form.algo_2) }}
-    {{ form_label(form.x4_samples) }}
-    {{ form_widget(form.x4_samples) }}
+
+    <div class="container-fluid p-0">
+        <div class="row mr-0">
+            <div class="col-3" id="tool_container">
+                <div id="toolContainer" class="tool_wrapper height-94vh">
+                <ul>
+                    <li class="tool_li pt-5">
+                        <button class="btn_make_image" id="createImage">create image</button>
+                    </li>
+                    <li class="tool_li pt-5">
+                        <div class="quantity">
+                            <ul class="inline_ul p-0">
+                                <li class="list_inline">
+                                    {{ form_widget(form.emoji_size, {'type':'number'}) }}
+                                </li>
+                                <li class="list_inline ml-3">
+                                    <div class="number_inc_label">
+                                        emoji size
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="tool_li pt-5">
+                        <div>
+                            <label class="switch">
+                                {{ form_widget(form.algo_2) }}
+                                <span class="slider"></span>
+                            </label>
+                            &nbsp algo 2
+                        </div>
+                    </li>
+                    <li class="tool_li pt-5">
+                        <div>
+                            <label class="switch">
+                                {{ form_widget(form.x4_samples) }}
+                                <span class="slider"></span>
+                            </label>
+                            &nbsp x5 samples
+                        </div>
+                    </li>
+                    <li id="dragdrop_li" class="tool_li pt-5">
+
+                    </li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-9" id="canvas_zone">
+                <div id="canvas_container">
+                    <div id="drop_file_zone" class="dropZone">
+                        <div id="drag_upload_file" class="dragUpload">
+                            <p>Drop image here</p>
+                            <p>or</p>
+                            <p><input id="file_exp" type="button" class="square_btn" value="Select File"></p>
+                            <input type="file" id="selectfile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 {% endblock %}
 {% block javascripts %}
-    <script src="js/nearestColor.js"></script>
-    <script src="js/emojiList.js"></script>
-    <script src="js/canvasLogic.js"></script>
+    {{ encore_entry_script_tags('emojiList') }}
+    {{ encore_entry_script_tags('nearestColor') }}
+    {{ encore_entry_script_tags('canvasLogic') }}
+    {{ encore_entry_script_tags('numInc') }}
 {% endblock %}
