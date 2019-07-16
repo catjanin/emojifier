@@ -139,12 +139,14 @@ input[type=number]
   border-radius: 25px;
   text-decoration: none;
   color: #FFF;
+  font-size: 120%;
   background-color: $fuschia;
   transition: all .4s;
 }
 
-.btn_make_image:hover {
+.btn_make_image:hover, .button_save_image:hover {
   box-shadow: inset 0px 0px 227px -4px rgba(0,0,0,0.27);
+  color: #FFF;
 }
 
 .inline_ul {
@@ -162,8 +164,7 @@ input[type=number]
 
 #canvas_container {
   position: relative;
-  height: 100%;
-  overflow: hidden;
+  height: 94vh;
 }
 
 .centered_canvas {
@@ -171,4 +172,33 @@ input[type=number]
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.button_save_image {
+  display: inline-block;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 25px;
+  color: #FFF;
+  background-color: $fuschia;
+  transition: all .4s;
+  text-decoration: none;
+}
+
+.loader {
+  border: 16px solid transparent;
+  border-radius: 50%;
+  border-top: 16px solid $main_accent_color;
+  border-bottom: 16px solid $main_accent_color;
+  width: 120px;
+  height: 120px;
+  animation: spin_loader 2s linear infinite;
+}
+
+
+
+
+@keyframes spin_loader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

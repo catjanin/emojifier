@@ -4,6 +4,7 @@ namespace App\Service;
 
 Class ClosestColor
 {
+
     public function NearestColor($givenColor, $palette)
     {
 
@@ -24,7 +25,7 @@ Class ClosestColor
             }
         }
 
-        return $palette[$return];
+        return $return;
     }
 
     public function rgb2lab($rgb)

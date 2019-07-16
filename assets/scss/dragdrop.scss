@@ -56,8 +56,8 @@
   background: $bg_color;
   border: dashed $border $main_accent_color; /* !importanté */
   border-radius: 1em;
-
 }
+
 .dragUpload {
   margin:0 auto;
 }
@@ -65,6 +65,7 @@
 .dragUpload p {
   text-align: center;
 }
+
 .dragUpload #selectfile {
   display: none;
 }
@@ -76,10 +77,27 @@
   color: #fff;
   border: dashed 2px $fuschia;
   border-radius: 3px;
-  transition: .6s;
   background-color: $bg_color;
 }
 
 .square_btn:hover {
   border-style: dotted;
+  transition: all .6s;
+}
+
+.dropZone_ani_class {
+  animation-duration: 0.7s;
+  animation-name: dropZone_ani;
+}
+
+@keyframes dropZone_ani {
+  0% {
+    border: dashed 5px $bg_color;
+  }
+  50% {
+    border: solid 5px $fuschia;
+  }
+  100% {
+    border: dashed 5px $bg_color;
+  }
 }

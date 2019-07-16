@@ -11,39 +11,53 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 
 let drawnSamples;
-let fileobj;
+let fileobj = null;
 require('./emojiList')();
 const nearestColor = require('./nearestColor');
+startListeners()
+function startListeners() {
 
-document.getElementById('drop_file_zone').addEventListener('dragover', (e)=>{
+document.getElementById('drop_file_zone').addEventListener('dragover', (e) => {
     e.preventDefault();
 });
 
-document.getElementById('drop_file_zone').addEventListener('dragstart', (e)=>{
+document.getElementById('drop_file_zone').addEventListener('dragstart', (e) => {
     e.preventDefault();
 });
 
-document.getElementById('drop_file_zone').addEventListener('drop', (event)=>{
+document.getElementById('drop_file_zone').addEventListener('drop', (event) => {
     upload_file(event);
 });
 
-document.getElementById('file_exp').addEventListener('click', ()=>{
+document.getElementById('file_exp').addEventListener('click', () => {
     file_explorer();
+    console.log('heyeyeye')
 });
+
+document.getElementById('dl_canvas').addEventListener('click', () => {
+    dlImage();
+});
+
+}
 
 function upload_file(e) {
     e.preventDefault();
     fileobj = e.dataTransfer.files[0];
-    console.log(e.dataTransfer.files[0])
+    changeDragDropState();
 }
 
 function file_explorer() {
     document.getElementById('selectfile').click();
     document.getElementById('selectfile').onchange = function() {
         fileobj = document.getElementById('selectfile').files[0];
+        changeDragDropState();
     };
+
 }
 document.getElementById('createImage').addEventListener('click', () => {
+
+    //addLoader();
+
     let image = fileobj;
 
     console.log(image);
@@ -127,9 +141,8 @@ function createCanvas(imageInfo, corEmojis = null) {
     let toolContainer = document.getElementById('toolContainer');
     if (toolContainer.classList.contains('height-94vh') && window.screen.availHeight < imageInfo.info.fullHeight) {
         toolContainer.classList.remove('height-94vh');
-        toolContainer.classList.add('height-100');
-    } else if (toolContainer.classList.contains('height-100') && window.screen.availHeight > imageInfo.info.fullHeight) {
-        toolContainer.classList.remove('height-100');
+
+    } else if (window.screen.availHeight > imageInfo.info.fullHeight) {
         toolContainer.classList.add('height-94vh');
     }
 
@@ -206,6 +219,7 @@ function drawStuff(info, corEmojis = null) {
     }
 
     function draw(x, y, offsetX, offsetY) {
+
         drawEmojis.forEach((v, i)=>{
             if(i % Number(imageInfo.height) === 0){
                 y = offsetY;
@@ -213,6 +227,64 @@ function drawStuff(info, corEmojis = null) {
             }
             y += Number(imageInfo.sampleSize) + offsetX;
             ctx.fillText(v, x - Number(imageInfo.sampleSize) + offsetX, y + offsetY);
-        })
+        });
+
+        correctHeight();
+        //removeLoader();
+
     }
+}
+
+
+
+
+function correctHeight() {
+    let toolContainer = document.getElementById('toolContainer');
+    let body = document.body;
+    let html = document.documentElement;
+
+    let heightMax = Math.max( body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    console.log(heightMax);
+
+    toolContainer.style.height = heightMax+'px';
+}
+
+function dlImage() {
+    document.getElementById('dl_canvas').href = document.getElementById('lecanvas').toDataURL('image/png');
+}
+
+function changeDragDropState() {
+
+    let outerDragDrop = document.getElementById('drop_file_zone');
+    let innerDragDrop = document.getElementById('drag_upload_file');
+
+    outerDragDrop.classList.add('dropZone_ani_class');
+
+    setTimeout(()=>{
+        outerDragDrop.classList.remove('dropZone_ani_class');
+    }, 1000)
+
+    if(fileobj !== null){
+        let elToRemoveDrag = document.getElementsByClassName('delete_me');
+
+        while(elToRemoveDrag[0]) {
+            elToRemoveDrag[0].remove();
+        }
+
+        innerDragDrop.innerHTML += '<p class="delete_me">'+ fileobj.name +'</p>';
+    }
+    console.log(innerDragDrop.children);
+    startListeners()
+}
+
+function addLoader() {
+    let canvasContainer = document.getElementById('canvas_container');
+    canvasContainer.innerHTML += '<div class="loader"></div>'
+}
+
+function removeLoader() {
+    let loader = document.getElementsByClassName('loader')[0];
+    loader.remove();
 }

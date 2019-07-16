@@ -62,7 +62,7 @@ class testGD
     public function roundSample($userSample, $width)
     {
         $trueSample = $userSample;
-        /*
+/*
         for ($i = $userSample; $i < $width; $i++) {
             if (($width+1) % $i === 0) {
                 $trueSample = $i;
