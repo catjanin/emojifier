@@ -27,7 +27,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="tool_li pt-5">
+                    <li class="tool_li pt-4">
                         <div>
                             <label class="switch">
                                 {{ form_widget(form.algo_2) }}
@@ -36,7 +36,7 @@
                             &nbsp algo 2
                         </div>
                     </li>
-                    <li class="tool_li pt-5">
+                    <li class="tool_li pt-4">
                         <div>
                             <label class="switch">
                                 {{ form_widget(form.x4_samples) }}
@@ -50,15 +50,14 @@
                             <a href="#" class="button_save_image" id="dl_canvas">Download</a>
                         </div>
                     </li>
-                    <!--<li class="tool_li pt-5">
+                    <!--<li class="tool_li pt-4">
                         <div>
                             <button id="adaptCanvas">Adapt to screen</button>
                         </div>
                     </li>-->
-                    <li id="dragdrop_li" class="tool_li pt-5">
+                    <li id="dragdrop_li" class="tool_li pt-4">
 
                     </li>
-
                 </ul>
                 </div>
             </div>
@@ -70,6 +69,9 @@
                             <p class="delete_me">or</p>
                             <p><input id="file_exp" type="button" class="square_btn" value="Select File"></p>
                             <input type="file" id="selectfile">
+                            <div id="loader_container">
+                                <div class="loader_pre mt-3" id="load_"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

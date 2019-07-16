@@ -14,7 +14,9 @@ let drawnSamples;
 let fileobj = null;
 require('./emojiList')();
 const nearestColor = require('./nearestColor');
-startListeners()
+
+startListeners();
+
 function startListeners() {
 
 document.getElementById('drop_file_zone').addEventListener('dragover', (e) => {
@@ -52,11 +54,11 @@ function file_explorer() {
         fileobj = document.getElementById('selectfile').files[0];
         changeDragDropState();
     };
-
 }
+
 document.getElementById('createImage').addEventListener('click', () => {
 
-    //addLoader();
+    addLoader();
 
     let image = fileobj;
 
@@ -88,7 +90,7 @@ document.getElementById('createImage').addEventListener('click', () => {
     sendRequest(file, algo);
 });
 
-function sendRequest(file, algo){
+function sendRequest(file, algo) {
 
     fetch("/sendRequest", {
         method: "POST",
@@ -104,7 +106,7 @@ function sendRequest(file, algo){
     })
 }
 
-function getTheEmojis(imageInfo){
+function getTheEmojis(imageInfo) {
     let emojiList = getEmojis();
     let emojiColors = emojiList.filter(el => el.charAt(0) === '#' && el.length === 7 );
     let getColor = nearestColor.from(emojiColors);
@@ -162,6 +164,7 @@ function createCanvas(imageInfo, corEmojis = null) {
 
     let canvasContainer = document.getElementById("canvas_container");
     canvasContainer.appendChild(canvas);
+    canvasContainer.style.height = '94vh';
 
     if (corEmojis === null) {
         drawStuff(imageInfo);
@@ -222,15 +225,15 @@ function drawStuff(info, corEmojis = null) {
 
         drawEmojis.forEach((v, i)=>{
             if(i % Number(imageInfo.height) === 0){
-                y = offsetY;
-                x += Number(imageInfo.sampleSize) + offsetX;
+                y = 0;
+                x += Number(imageInfo.sampleSize);
             }
-            y += Number(imageInfo.sampleSize) + offsetX;
+            y += Number(imageInfo.sampleSize);
             ctx.fillText(v, x - Number(imageInfo.sampleSize) + offsetX, y + offsetY);
         });
 
         correctHeight();
-        //removeLoader();
+        removeLoader();
 
     }
 }
@@ -248,7 +251,7 @@ function correctHeight() {
 
     console.log(heightMax);
 
-    toolContainer.style.height = heightMax+'px';
+    toolContainer.style.height = (body.scrollHeight-57)+'px';
 }
 
 function dlImage() {
@@ -273,18 +276,17 @@ function changeDragDropState() {
             elToRemoveDrag[0].remove();
         }
 
-        innerDragDrop.innerHTML += '<p class="delete_me">'+ fileobj.name +'</p>';
+        innerDragDrop.firstElementChild.innerHTML += '<p class="delete_me mt-3">'+ fileobj.name +'</p>';
     }
-    console.log(innerDragDrop.children);
     startListeners()
 }
 
 function addLoader() {
-    let canvasContainer = document.getElementById('canvas_container');
-    canvasContainer.innerHTML += '<div class="loader"></div>'
+    let loader = document.getElementById('load_');
+    loader.style.display = "block";
 }
 
 function removeLoader() {
-    let loader = document.getElementsByClassName('loader')[0];
-    loader.remove();
+    let loader = document.getElementById('load_');
+    loader.style.display = "none";
 }
