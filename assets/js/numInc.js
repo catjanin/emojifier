@@ -34,3 +34,19 @@ jQuery('.quantity').each(function() {
     });
 
 });
+
+document.getElementById('sample_slider').addEventListener('input', (e) => {
+    let value = document.getElementById('sample_slider').value;
+    document.getElementById('sample_number').value = value;
+});
+
+document.getElementById('sample_number').addEventListener('input', (e) => {
+    let value = document.getElementById('sample_number').value;
+    if (value > 50){
+        value = 50;
+    } else if (value < 0){
+        value = 0;
+    }
+    document.getElementById('sample_number').value = value;
+    document.getElementById('sample_slider').value = value;
+});

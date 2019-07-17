@@ -47,6 +47,20 @@
                     </li>
                     <li class="tool_li pt-5">
                         <div>
+                            <ul class="inline_ul p-0">
+                                <li class="list_inline">
+                                    <input type="text" value="1" name="sample-number" id="sample_number">
+                                </li>
+                                <li class="list_inline ml-3">
+                                    <label>Samples offset
+                                        <input type="range" name="sample-slider" id="sample_slider" value="1" min="0" max="50">
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="tool_li pt-4">
+                        <div>
                             <a href="#" class="button_save_image" id="dl_canvas">Download</a>
                         </div>
                     </li>
@@ -88,4 +102,5 @@
     {{ encore_entry_script_tags('nearestColor') }}
     {{ encore_entry_script_tags('canvasLogic') }}
     {{ encore_entry_script_tags('numInc') }}
+    {{ encore_entry_script_tags('emojiGet') }}
 {% endblock %}

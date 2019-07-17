@@ -43,7 +43,7 @@ class MosaicRequestController extends AbstractController
     public function requireEmojification($requiredSample, $fileName, $requiredAlgo) :Response
     {
         $image = [];
-        $emojis = new EmojiListRGB();
+        $emojis = new EmojiList();
         $queryImg = new testGD();
         $closestColor = new ClosestColor();
 
@@ -62,15 +62,13 @@ class MosaicRequestController extends AbstractController
             $emojiList = $emojis->getEmojis();
             $imageColors = $queryImg->getFullColors();
 
-            $emojiColors = array_filter($emojiList[0], function ($e) {
-                if (!is_string($e)) {
-                    return $e;
-                }
-            });
+            $emojiColors = array_map(function ($e) {
+                    return $e['regbColor'];
+            },$emojiList);
 
             foreach ($imageColors as $key => $val) {
                 $closestIndex = $closestColor->NearestColor(substr($val, 1), $emojiColors);
-                $emojiToUse[] = $emojiList[0][$closestIndex - 1];
+                $emojiToUse[] = $emojiList[$closestIndex]['char'];
             }
 
             $image['emojis'] = $emojiToUse;

@@ -1,9 +1,9 @@
-Element.prototype.remove = function() {
+Element.prototype.remove = function () {
     this.parentElement.removeChild(this);
 };
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(let i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
+    for (let i = this.length - 1; i >= 0; i--) {
+        if (this[i] && this[i].parentElement) {
             this[i].parentElement.removeChild(this[i]);
         }
     }
@@ -12,33 +12,44 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 let drawnSamples;
 let fileobj = null;
-require('./emojiList')();
+let emojiList = null;;
+
+fetch("/getEmojis", {
+    method: "GET",
+}).then((response) => {
+    return response.text();
+}).then((res) => {
+    console.log(JSON.parse(res));
+    emojiList =  JSON.parse(res);
+});
+
+
 const nearestColor = require('./nearestColor');
 
 startListeners();
 
 function startListeners() {
 
-document.getElementById('drop_file_zone').addEventListener('dragover', (e) => {
-    e.preventDefault();
-});
+    document.getElementById('drop_file_zone').addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });
 
-document.getElementById('drop_file_zone').addEventListener('dragstart', (e) => {
-    e.preventDefault();
-});
+    document.getElementById('drop_file_zone').addEventListener('dragstart', (e) => {
+        e.preventDefault();
+    });
 
-document.getElementById('drop_file_zone').addEventListener('drop', (event) => {
-    upload_file(event);
-});
+    document.getElementById('drop_file_zone').addEventListener('drop', (event) => {
+        upload_file(event);
+    });
 
-document.getElementById('file_exp').addEventListener('click', () => {
-    file_explorer();
-    console.log('heyeyeye')
-});
+    document.getElementById('file_exp').addEventListener('click', () => {
+        file_explorer();
+        console.log('heyeyeye')
+    });
 
-document.getElementById('dl_canvas').addEventListener('click', () => {
-    dlImage();
-});
+    document.getElementById('dl_canvas').addEventListener('click', () => {
+        dlImage();
+    });
 
 }
 
@@ -50,7 +61,7 @@ function upload_file(e) {
 
 function file_explorer() {
     document.getElementById('selectfile').click();
-    document.getElementById('selectfile').onchange = function() {
+    document.getElementById('selectfile').onchange = function () {
         fileobj = document.getElementById('selectfile').files[0];
         changeDragDropState();
     };
@@ -73,17 +84,17 @@ document.getElementById('createImage').addEventListener('click', () => {
     file.append('image', image);
     file.append('size', emojisize);
 
-    if(algo2.checked){
+    if (algo2.checked) {
         file.append('algo', 'algo_2');
         algo = 2;
-    }else{
+    } else {
         file.append('algo', 'algo_1');
         algo = 1;
     }
 
-    if(drawnSamplesCheckbox.checked){
+    if (drawnSamplesCheckbox.checked) {
         drawnSamples = 'multi';
-    }else{
+    } else {
         drawnSamples = 'one';
     }
 
@@ -95,25 +106,25 @@ function sendRequest(file, algo) {
     fetch("/sendRequest", {
         method: "POST",
         body: file
-    }).then((response)=>{
+    }).then((response) => {
         return response.text();
-    }).then((res)=>{
-        if(algo === 1){
+    }).then((res) => {
+        if (algo === 1) {
             getTheEmojis(JSON.parse(res));
-        }else{
+        } else {
             createCanvas(JSON.parse(res))
         }
     })
 }
 
 function getTheEmojis(imageInfo) {
-    let emojiList = getEmojis();
-    let emojiColors = emojiList.filter(el => el.charAt(0) === '#' && el.length === 7 );
+    console.log(emojiList);
+    let emojiColors = emojiList.map(n => n.hexColor);
     let getColor = nearestColor.from(emojiColors);
     let corEmojis = [];
 
-    imageInfo.colors.forEach((v)=>{
-        let corespEmoji = emojiList[emojiList.indexOf(getColor(v))-1];
+    imageInfo.colors.forEach((v) => {
+        let corespEmoji = emojiList[emojiList.map(n => n.hexColor).indexOf(getColor(v))].char;
         corEmojis.push(corespEmoji);
     });
 
@@ -125,7 +136,7 @@ function createCanvas(imageInfo, corEmojis = null) {
 
     let oldCanvas = document.getElementById('lecanvas');
 
-    if (typeof(oldCanvas) != 'undefined' && oldCanvas != null) {
+    if (typeof (oldCanvas) != 'undefined' && oldCanvas != null) {
         document.getElementById("lecanvas").remove();
     }
 
@@ -191,6 +202,10 @@ function drawStuff(info, corEmojis = null) {
     ctx.font = imageInfo.sampleSize + "px Arial"; //cool thing if .sampleSize is undefined (scale option ?) !
 
     if (drawnSamples === 'multi') {
+
+        let offsetValue = document.getElementById('sample_slider').value;
+        console.log(offsetValue);
+
         for (let u = 0; u < 5; u++) {
 
             let offsetX = 0;
@@ -199,10 +214,10 @@ function drawStuff(info, corEmojis = null) {
             let x = 0;
             let y = 0;
 
-            if (u === 0) offsetX = 1;
-            if (u === 1) offsetX = -1;
-            if (u === 2) offsetY = 1;
-            if (u === 3) offsetY = -1;
+            if (u === 0) offsetX = offsetValue;
+            if (u === 1) offsetX = -offsetValue;
+            if (u === 2) offsetY = offsetValue;
+            if (u === 3) offsetY = -offsetValue;
             if (u === 4) {
                 offsetY = 0;
                 offsetX = 0;
@@ -210,8 +225,7 @@ function drawStuff(info, corEmojis = null) {
 
             draw(x, y, offsetX, offsetY)
         }
-    }
-    else if (drawnSamples === 'one') {
+    } else if (drawnSamples === 'one') {
         console.log(info.sampleSize);
 
         let offsetX = 0;
@@ -223,8 +237,8 @@ function drawStuff(info, corEmojis = null) {
 
     function draw(x, y, offsetX, offsetY) {
 
-        drawEmojis.forEach((v, i)=>{
-            if(i % Number(imageInfo.height) === 0){
+        drawEmojis.forEach((v, i) => {
+            if (i % Number(imageInfo.height) === 0) {
                 y = 0;
                 x += Number(imageInfo.sampleSize);
             }
@@ -239,19 +253,17 @@ function drawStuff(info, corEmojis = null) {
 }
 
 
-
-
 function correctHeight() {
     let toolContainer = document.getElementById('toolContainer');
     let body = document.body;
     let html = document.documentElement;
 
-    let heightMax = Math.max( body.scrollHeight, body.offsetHeight,
-        html.clientHeight, html.scrollHeight, html.offsetHeight );
+    let heightMax = Math.max(body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight);
 
     console.log(heightMax);
 
-    toolContainer.style.height = (body.scrollHeight-57)+'px';
+    toolContainer.style.height = (body.scrollHeight - 57) + 'px';
 }
 
 function dlImage() {
@@ -265,20 +277,20 @@ function changeDragDropState() {
 
     outerDragDrop.classList.add('dropZone_ani_class');
 
-    setTimeout(()=>{
+    setTimeout(() => {
         outerDragDrop.classList.remove('dropZone_ani_class');
-    }, 1000)
+    }, 1000);
 
-    if(fileobj !== null){
+    if (fileobj !== null) {
         let elToRemoveDrag = document.getElementsByClassName('delete_me');
 
-        while(elToRemoveDrag[0]) {
+        while (elToRemoveDrag[0]) {
             elToRemoveDrag[0].remove();
         }
 
-        innerDragDrop.firstElementChild.innerHTML += '<p class="delete_me mt-3">'+ fileobj.name +'</p>';
+        innerDragDrop.firstElementChild.innerHTML += '<p class="delete_me mt-3">' + fileobj.name + '</p>';
     }
-    startListeners()
+    startListeners();
 }
 
 function addLoader() {

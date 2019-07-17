@@ -225,9 +225,14 @@ input[type=number]
   height: 70vh;
 }
 
+#sample_number {
+  width: 50px;
+}
+
 
 
 @keyframes spin_loader {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
