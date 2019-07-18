@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <img src="" class="mt-3" alt="Logo">
+        </div>
+        <h1 class=" mb-5 text-center ">Bienvenue sur mon blog</h1>
+        <form method="post">
+            <div class="bloc-beige col-8 offset-2">
+                {% for message in app.flashes('updated-password') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="form-row justify-content-center">
+                    <label for="inputUsername" class="sr-only">Pseudo</label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                           class="form-control mb-4 col-8" placeholder="Pseudo" required>
+                </div>
+                <div class="form-row justify-content-center">
+                    <label for="inputPassword" class="sr-only">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control col-8 mb-4"
+                           placeholder="Mot de passe" required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}">
+                </div>
+                <div class="form-row justify-content-center">
+                    <button class="btn btn-lg base-btn" type="submit">
+                        Se connecter
+                    </button>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <a class="txtItalic" href="{{path('app_forgotten_password')  }}">mot de passe oublié ?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

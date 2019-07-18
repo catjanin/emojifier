@@ -1,6 +1,11 @@
 <nav class="navbar navbar-expand-sm navbar_bg justify-content-end">
     <a class="navbar-brand" href="#">Home</a>
-    <button class="btn_fixed ml-auto mr-1">Create</button>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="btn_fixed ml-auto mr-1" href="{{ path('logout') }}">Logout</a>
+    {% endif %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+        <a class="btn_fixed ml-auto mr-1" href="{{ path('app_login') }}">Login</a>
+    {% endif %}
     <div>&nbsp&nbsp</div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>

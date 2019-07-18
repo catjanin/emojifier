@@ -47,21 +47,6 @@ class User implements UserInterface
      */
     private $email;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author")
-     */
-    private $articles;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Article")
-     */
-    private $favoris;
-
-    public function __construct()
-    {
-        $this->articles = new ArrayCollection();
-        $this->favoris = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {

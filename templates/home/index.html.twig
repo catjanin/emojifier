@@ -60,9 +60,18 @@
                         </div>
                     </li>
                     <li class="tool_li pt-4">
-                        <div>
-                            <a href="#" class="button_save_image" id="dl_canvas">Download</a>
-                        </div>
+                        <ul>
+                    <li class="list_inline">
+                        <a href="#" class="button_save_image" id="dl_canvas">download</a>
+                    </li>
+                    <li class="list_inline ml-3">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <button type="button" id="modal_show" class="btn_fixed ml-auto mr-1" data-toggle="modal" data-target="#uploadModal">upload</button>
+                        {% else %}
+                            <a class="btn_fixed ml-auto mr-1" href="{{ path('app_login') }}">upload</a>
+                        {% endif %}
+                    </li>
+                        </ul>
                     </li>
                     <!--<li class="tool_li pt-4">
                         <div>
@@ -93,14 +102,50 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <div id="upload_form_container">
+                                <label>Image name :
+                                    <input type="text" id="image_upload_name">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div id="modal_image_wrap">
 
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="modal_upload_button" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
 {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
     {{ encore_entry_script_tags('emojiList') }}
     {{ encore_entry_script_tags('nearestColor') }}
     {{ encore_entry_script_tags('canvasLogic') }}
     {{ encore_entry_script_tags('numInc') }}
     {{ encore_entry_script_tags('emojiGet') }}
+    {{ encore_entry_script_tags('modalUpload') }}
 {% endblock %}

@@ -30,6 +30,7 @@ Encore
     .addEntry('nearestColor', './assets/js/nearestColor.js')
     .addEntry('emojiGet', './assets/js/emojiGet.js')
     .addEntry('emojiSearch', './assets/js/emojiSearch.js')
+    .addEntry('modalUpload', './assets/js/modalUpload.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

@@ -110,6 +110,7 @@ function sendRequest(file, algo) {
         return response.text();
     }).then((res) => {
         if (algo === 1) {
+            console.log(res);
             getTheEmojis(JSON.parse(res));
         } else {
             createCanvas(JSON.parse(res))

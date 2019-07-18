@@ -34,9 +34,11 @@ class MosaicRequestController extends AbstractController
             mkdir('uploads', 0777);
         }
 
-        move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);
+        $uniqName = 'im-'.uniqid().'.jpg';
 
-        return $this->requireEmojification($requiredSample, $file['name'], $requiredAlgo);
+        move_uploaded_file($file['tmp_name'], 'uploads/' . $uniqName);
+
+        return $this->requireEmojification($requiredSample, $uniqName, $requiredAlgo);
 
     }
 
