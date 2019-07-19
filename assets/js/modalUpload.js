@@ -19,14 +19,16 @@ document.getElementById('modal_show').addEventListener('click', () => {
 
 document.getElementById('modal_upload_button').addEventListener('click', () => {
     let name = document.getElementById('image_upload_name').value;
-    imageUpload(name);
+    let canvas = document.getElementById('lecanvas');
+    let canvasData = canvas.toDataURL("image/png");
+    imageUpload(name, canvasData);
 });
 
-function imageUpload(name) {
-console.log(name)
+function imageUpload(name, canvasData) {
+    console.log(name, canvasData);
     fetch("/uploadImage", {
         method: "POST",
-        body: name
+        body: JSON.stringify({name: name, image: canvasData})
     })/*.then((response) => {
         return response.text();
     }).then((res) => {

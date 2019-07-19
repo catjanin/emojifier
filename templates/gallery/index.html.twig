@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    {% include '_navbar.html.twig' %}
+    {% for index, image in images %}
+        <img src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

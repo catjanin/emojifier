@@ -168,6 +168,7 @@ function createCanvas(imageInfo, corEmojis = null) {
     canvas.height = imageInfo.info.fullHeight;
     canvas.style.border = "1px solid";
 
+
     let canvasZone = document.getElementById('canvas_zone');
 
     if (imageInfo.info.fullWidth < canvasZone.offsetWidth) {
@@ -201,6 +202,9 @@ function drawStuff(info, corEmojis = null) {
     }
 
     ctx.font = imageInfo.sampleSize + "px Arial"; //cool thing if .sampleSize is undefined (scale option ?) !
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, imageInfo.fullWidth, imageInfo.fullHeight);
+
 
     if (drawnSamples === 'multi') {
 
