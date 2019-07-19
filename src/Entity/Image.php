@@ -53,7 +53,7 @@ class Image
         return $this;
     }
 
-    public function getCommonName(): ?int
+    public function getCommonName(): ?string
     {
         return $this->commonName;
     }
@@ -65,7 +65,7 @@ class Image
         return $this;
     }
 
-    public function getAuthor(): ?int
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
