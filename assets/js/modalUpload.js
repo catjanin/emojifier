@@ -19,16 +19,29 @@ document.getElementById('modal_show').addEventListener('click', () => {
 
 document.getElementById('modal_upload_button').addEventListener('click', () => {
     let name = document.getElementById('image_upload_name').value;
+    let dimension = document.getElementById('image_dimension').innerText;
+    let emojiCount = document.getElementById('image_nbrEmojis').innerText;
     let canvas = document.getElementById('lecanvas');
     let canvasData = canvas.toDataURL("image/png");
-    imageUpload(name, canvasData);
+
+    let categories = Array.from(document.getElementsByName('someRadio'));
+
+    let category = '';
+
+    categories.forEach((v) => {
+        if (v.checked) {
+            category = v.value;
+        }
+    });
+
+    imageUpload(name, canvasData, dimension, emojiCount, category);
 });
 
-function imageUpload(name, canvasData) {
+function imageUpload(name, canvasData, dimension, emojiCount, category) {
     console.log(name, canvasData);
     fetch("/uploadImage", {
         method: "POST",
-        body: JSON.stringify({name: name, image: canvasData})
+        body: JSON.stringify({name: name, image: canvasData, dimension: dimension, emojiCount: emojiCount, category: category})
     })/*.then((response) => {
         return response.text();
     }).then((res) => {

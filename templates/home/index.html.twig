@@ -9,79 +9,96 @@
         <div class="row mr-0">
             <div class="col-3" id="tool_container">
                 <div id="toolContainer" class="tool_wrapper height-94vh">
-                <ul>
-                    <li class="tool_li pt-5">
-                        <button class="btn_make_image" id="createImage">create image</button>
-                    </li>
-                    <li class="tool_li pt-5">
-                        <div class="quantity">
-                            <ul class="inline_ul p-0">
-                                <li class="list_inline">
-                                    {{ form_widget(form.emoji_size, {'type':'number'}) }}
-                                </li>
-                                <li class="list_inline ml-3">
-                                    <div class="number_inc_label">
-                                        emoji size
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="tool_li pt-4">
-                        <div>
-                            <label class="switch">
-                                {{ form_widget(form.algo_2) }}
-                                <span class="slider"></span>
-                            </label>
-                            &nbsp algo 2
-                        </div>
-                    </li>
-                    <li class="tool_li pt-4">
-                        <div>
-                            <label class="switch">
-                                {{ form_widget(form.x4_samples) }}
-                                <span class="slider"></span>
-                            </label>
-                            &nbsp x5 samples
-                        </div>
-                    </li>
-                    <li class="tool_li pt-5">
-                        <div>
-                            <ul class="inline_ul p-0">
-                                <li class="list_inline">
-                                    <input type="text" value="1" name="sample-number" id="sample_number">
-                                </li>
-                                <li class="list_inline ml-3">
-                                    <label>Samples offset
-                                        <input type="range" name="sample-slider" id="sample_slider" value="1" min="0" max="50">
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="tool_li pt-4">
-                        <ul>
-                    <li class="list_inline">
-                        <a href="#" class="button_save_image" id="dl_canvas">download</a>
-                    </li>
-                    <li class="list_inline ml-3">
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <button type="button" id="modal_show" class="btn_fixed ml-auto mr-1" data-toggle="modal" data-target="#uploadModal">upload</button>
-                        {% else %}
-                            <a class="btn_fixed ml-auto mr-1" href="{{ path('app_login') }}">upload</a>
-                        {% endif %}
-                    </li>
-                        </ul>
-                    </li>
-                    <!--<li class="tool_li pt-4">
-                        <div>
-                            <button id="adaptCanvas">Adapt to screen</button>
-                        </div>
-                    </li>-->
-                    <li id="dragdrop_li" class="tool_li pt-4">
+                    <ul>
+                        <li class="tool_li pt-5">
+                            <button class="btn_make_image" id="createImage">Emojify !</button>
+                        </li>
+                        <li class="tool_li pt-5">
+                            <div class="quantity">
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline">
+                                        {{ form_widget(form.emoji_size, {'type':'number'}) }}
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <div class="number_inc_label">
+                                            emoji size
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="tool_li pt-4">
+                            <div>
+                                <label class="switch">
+                                    {{ form_widget(form.algo_2) }}
+                                    <span class="slider"></span>
+                                </label>
+                                &nbsp algo 2
+                            </div>
+                        </li>
+                        <li class="tool_li pt-4">
+                            <div>
+                                <label class="switch">
+                                    {{ form_widget(form.x4_samples) }}
+                                    <span class="slider"></span>
+                                </label>
+                                &nbsp x5 samples
+                            </div>
+                        </li>
+                        <li class="tool_li pt-5">
+                            <div>
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline">
+                                        <input type="text" value="1" name="sample-number" id="sample_number">
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <label>Samples offset
+                                            <input type="range" name="sample-slider" id="sample_slider" value="1"
+                                                   min="0" max="50">
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
-                    </li>
-                </ul>
+                        <li class="tool_li pt-5">
+                            <ul class="p-0">
+                                <li class="list_inline">
+                                    <a href="#" class="button_save_image" id="dl_canvas">download</a>
+                                </li>
+                                <li class="list_inline ml-3">
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                        <button type="button" id="modal_show" class="button_save_image ml-auto mr-1"
+                                                data-toggle="modal" data-target="#uploadModal">upload
+                                        </button>
+                                    {% else %}
+                                        <a class="button_save_image" href="{{ path('app_login') }}">upload</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="tool_li pt-5">
+                            <div>
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline ml-0">
+                                        <div id="image_dimension">
+
+                                        </div>
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <div id="image_nbrEmojis">
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li id="dragdrop_li" class="tool_li pt-4">
+
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-9" id="canvas_zone">
@@ -103,7 +120,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,20 +132,43 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-6">
-                            <div id="upload_form_container">
-                                <label>Image name :
-                                    <input type="text" id="image_upload_name">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div id="modal_image_wrap">
+                        <div class="row">
+                            <div class="col-6">
+                                <div id="upload_form_container">
+                                    <label>Image name :
+                                        <input type="text" id="image_upload_name">
+                                    </label>
+                                    <div>
+                                        Category :
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="huey" name="someRadio" value="nerd"
+                                               checked>
+                                        <label for="huey">NERDD</label>
+                                    </div>
 
+                                    <div>
+                                        <input type="radio" id="dewey" name="someRadio" value="nature">
+                                        <label for="dewey">li abres li oiso</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="louie" name="someRadio" value="art">
+                                        <label for="louie">aesthetic</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="louie" name="someRadio" value="other">
+                                        <label for="louie">otherstuffididntthinkabout;(</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div id="modal_image_wrap">
+
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">

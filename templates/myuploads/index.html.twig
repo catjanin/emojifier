@@ -6,24 +6,10 @@
 
 {% block body %}
     {% include '_navbar.html.twig' %}
-    <div class="container-fluid">
-        <h1 class="text-center">Gallery</h1>
-    </div>
     <div class="gallery_searchbar_container">
         <label>Search :
             <input type="text" class="input_bar" id="gallery_searchbar_input">
         </label>
-    </div>
-    <div>
-        <label for="cat-select">Categories :</label>
-
-        <select id="cat-select">
-            <option value="all">all</option>
-            <option value="nerd">NERD</option>
-            <option value="nature">Neture</option>
-            <option value="art">Ert</option>
-            <option value="other">other</option>
-        </select>
     </div>
     <div class="container-fluid content-row">
         <div class="row mt-5">
@@ -32,7 +18,7 @@
                     <div class="gallery_card_container mx-auto" data-toggle="modal" data-target="modal-{{ index }}">
                         <div class="card mx-auto text-center gallery_card" data-toggle="modal" data-target="#modal-{{ index }}">
                             <img class="card-img-top gallery_card_img rounded"
-                                                src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
+                                 src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
                             <div class="card-body">
                                 <div class="gallery_card_title_container">
                                     <h2 class="card-title gallery_card_title mb-4">{{ image.commonName }}</h2>
@@ -41,9 +27,6 @@
                                             <li>author : {{ image.author }}</li>
                                             <li>{{ image.dimension }}</li>
                                             <li>{{ image.nbrEmojis }}</li>
-                                            {% if image.category != '' %}
-                                                <li class="gallery_categ">category : {{ image.category }}</li>
-                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
@@ -67,6 +50,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="/delete/{{ image.id }}">DELETEETET</a>
                             </div>
                         </div>
                     </div>

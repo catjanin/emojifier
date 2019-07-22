@@ -5,7 +5,7 @@
 }
 
 .gallery_card_container {
-
+  cursor: pointer;
 }
 
 .card {
@@ -13,7 +13,6 @@
 }
 
 .gallery_card_title_container {
-  width: 80%;
   height: 100%;
   min-height: 100px;
   margin: 0 auto;
@@ -34,6 +33,7 @@
 }
 
 .gallery_card_list_container {
+  text-align: left;
   bottom: 0px;
   font-style: italic;
   color: $main_accent_color;

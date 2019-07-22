@@ -201,12 +201,17 @@ function drawStuff(info, corEmojis = null) {
         drawEmojis = corEmojis;
     }
 
+    imageInfo.nbrEmojis = Math.round((imageInfo.fullWidth * imageInfo.fullHeight) / (imageInfo.sampleSize * imageInfo.sampleSize));
+    imageInfo.dimension = imageInfo.fullWidth + ' x ' + imageInfo.fullHeight;
+
     ctx.font = imageInfo.sampleSize + "px Arial"; //cool thing if .sampleSize is undefined (scale option ?) !
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, imageInfo.fullWidth, imageInfo.fullHeight);
 
 
     if (drawnSamples === 'multi') {
+
+        imageInfo.nbrEmojis = imageInfo.nbrEmojis*5;
 
         let offsetValue = document.getElementById('sample_slider').value;
         console.log(offsetValue);
@@ -251,12 +256,19 @@ function drawStuff(info, corEmojis = null) {
             ctx.fillText(v, x - Number(imageInfo.sampleSize) + offsetX, y + offsetY);
         });
 
+        displayInfo(imageInfo);
         correctHeight();
         removeLoader();
 
     }
 }
 
+
+
+function displayInfo(imageInfo) {
+    document.getElementById('image_dimension').innerHTML = 'dimension : ' + imageInfo.dimension;
+    document.getElementById('image_nbrEmojis').innerHTML = 'emojis count : ' + imageInfo.nbrEmojis;
+}
 
 function correctHeight() {
     let toolContainer = document.getElementById('toolContainer');
@@ -266,9 +278,7 @@ function correctHeight() {
     let heightMax = Math.max(body.scrollHeight, body.offsetHeight,
         html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-    console.log(heightMax);
-
-    toolContainer.style.height = (body.scrollHeight - 57) + 'px';
+    toolContainer.style.height = (heightMax - 57) + 'px';
 }
 
 function dlImage() {

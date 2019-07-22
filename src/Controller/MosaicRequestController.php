@@ -38,19 +38,6 @@ class MosaicRequestController extends AbstractController
 
         $uniqName = 'im-' . uniqid() . '.jpg';
 
-        //$lastUpload->setLastUploadName($uniqName);
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $lastUpload = new LastUpload();
-        $lastUpload->setName($uniqName);
-        $lastUpload->setUserId($this->getUser()->getId());
-
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
-        $entityManager->persist($lastUpload);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
 
         move_uploaded_file($file['tmp_name'], 'uploads/' . $uniqName);
 
