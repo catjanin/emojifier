@@ -37,7 +37,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/mot-de-passe-oublier", name="app_forgotten_password")
+     * @Route("/forgotten_password", name="app_forgotten_password")
      */
     public function forgottenPassword(
         Request $request,

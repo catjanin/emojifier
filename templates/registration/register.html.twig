@@ -2,18 +2,72 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
 {% block body %}
     <div class="container">
-    <h1 class="text-center">Inscription</h1>
+    <h1 class="text-center mt-5">Register</h1>
+        <div class="container-fluid mx-auto mt-5">
+            <div class="register_form_subcontainer">
+            {{ form_start(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.password) }}
-{#        {{ form_row(registrationForm.confirm_password) }}#}
-<div class="row justify-content-center">
-        <button class="btn btn-primary">Enregistrer</button>
+            <ul>
+                <li>
+                    <ul>
+                        <li class="list_inline li_inline_text">
+                            {{ form_label(registrationForm.username) }}
+                        </li>
+                        <li class="list_inline li_inline_input">
+                            {{ form_widget(registrationForm.username) }}
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li class="list_inline li_inline_text">
+                            {{ form_label(registrationForm.email) }}
+                        </li>
+                        <li class="list_inline li_inline_input">
+                            {{ form_widget(registrationForm.email) }}
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li class="list_inline li_inline_text">
+                            {{ form_label(registrationForm.password.first) }}
+                        </li>
+                        <li class="list_inline li_inline_input">
+                            {{ form_widget(registrationForm.password.first) }}
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li class="list_inline li_inline_text">
+                            {{ form_label(registrationForm.password.second) }}
+                        </li>
+                        <li class="list_inline li_inline_input">
+                            {{ form_widget(registrationForm.password.second) }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            {# {{ form_row(registrationForm.confirm_password) }} #}
+        </div>
+
+<div class="row justify-content-center mt-3">
+        <button class="button_save_image mt-4">Register</button>
     {{ form_end(registrationForm) }}
 </div>
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}

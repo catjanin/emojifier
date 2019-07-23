@@ -17,21 +17,21 @@ class ChangePasswordFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Confirmer votre Pseudo',
+                    'placeholder' => 'Confirm your account',
                 ],
-                'constraints' => [new NotBlank(['message'=>'Veuillez compléter ce champs'])]
+                'constraints' => [new NotBlank(['message'=>'Please fill these fields'])]
             ])
 
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe ne sont pas identiques',
+                'invalid_message' => 'The passwords aren\'t identical',
                 'options' => ['attr' => ['class' => 'mot de passe']],
                 'required' =>true,
                 'first_options' => ['label' => false, 'attr' => [
-                    'placeholder' => 'Nouveau mot de passe',
+                    'placeholder' => 'New password',
                 ],],
                 'second_options' => ['label' => false,'attr' => [
-                    'placeholder' => 'Répéter votre nouveau mot de passe',
+                    'placeholder' => 'Repeat password',
                 ],]
             ]);
     }
