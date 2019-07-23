@@ -209,7 +209,7 @@ function drawStuff(info, corEmojis = null) {
         drawEmojis = corEmojis;
     }
 
-    console.log('de length : ' + drawEmojis.length)
+    console.log('DE : ' + drawEmojis)
 
     imageInfo.nbrEmojis = Math.round((imageInfo.fullWidth * imageInfo.fullHeight) / (imageInfo.sampleSize * imageInfo.sampleSize));
     imageInfo.dimension = imageInfo.fullWidth + ' x ' + imageInfo.fullHeight;

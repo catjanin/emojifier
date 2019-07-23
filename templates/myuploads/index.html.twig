@@ -30,6 +30,9 @@
                                             <li>author : {{ image.author }}</li>
                                             <li>{{ image.dimension }}</li>
                                             <li>{{ image.nbrEmojis }}</li>
+                                            {% if image.category != '' %}
+                                                <li class="gallery_categ">category : {{ image.category }}</li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>

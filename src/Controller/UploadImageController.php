@@ -68,7 +68,7 @@ class UploadImageController extends AbstractController
         $image->setAuthor($this->getUser()->getUsername());
         $image->setDimension($dimension);
         $image->setNbrEmojis($emojiCount);
-        if ($category === 'nerd' || $category === 'nature' || $category === 'art' || $category === 'other') {
+        if ($category === 'video games' || $category === 'nature' || $category === 'art' || $category === 'other') {
             $image->setCategory($category);
         }
 
