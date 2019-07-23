@@ -323,6 +323,7 @@ input[type=number]
 
 
 
+
 #loader_container {
   position: absolute;
   top: 75%;
@@ -336,6 +337,10 @@ input[type=number]
 
 #sample_number {
   width: 50px;
+}
+
+#slider_toggle {
+  display: none;
 }
 
 

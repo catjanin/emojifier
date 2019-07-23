@@ -36,7 +36,7 @@
                                 &nbsp algo 2
                             </div>
                         </li>
-                        <li class="tool_li pt-4">
+                        <li class="tool_li pt-4 pb-4" id="x5_toggle">
                             <div>
                                 <label class="switch">
                                     {{ form_widget(form.x4_samples) }}
@@ -45,8 +45,8 @@
                                 &nbsp x5 samples
                             </div>
                         </li>
-                        <li class="tool_li">
-                            <div class="pt-5">
+                        <li class="tool_li"  id="slider_toggle">
+                            <div class="pt-2">
                                 <ul class="inline_ul p-0">
                                     <li class="list_inline">
                                         <input class="nbr_field_offset" type="text" value="1" name="sample-number" id="sample_number">
@@ -54,7 +54,7 @@
                                     <li class="list_inline ml-3">
                                         <label class="label_slider_offset">Samples offset
                                             <input class="slider_offset" type="range" name="sample-slider" id="sample_slider" value="1"
-                                                   min="0" max="50">
+                                                   min="0" max="10">
                                         </label>
                                     </li>
                                 </ul>

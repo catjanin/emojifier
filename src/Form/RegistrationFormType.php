@@ -17,18 +17,18 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Pseudo',
+                'label' => 'Name',
                 ])
             ->add('email', EmailType::class, [
-                'label' => 'Entrer une adresse e-mail',
+                'label' => 'Email',
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe ne sont pas identique',
+                'invalid_message' => 'Passwords aren\'t identical',
                 'options' => ['attr' => ['class' => 'mot de passe']],
                 'required' =>true,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter votre mot de passe'],
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat password'],
             ]);
     }
 

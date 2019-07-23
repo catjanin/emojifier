@@ -44,11 +44,19 @@ function startListeners() {
 
     document.getElementById('file_exp').addEventListener('click', () => {
         file_explorer();
-        console.log('heyeyeye')
     });
 
     document.getElementById('dl_canvas').addEventListener('click', () => {
         dlImage();
+    });
+
+    document.getElementById('x5_toggle').addEventListener('click', () => {
+        if(document.querySelector('#x5_toggle input').checked){
+            console.log('yay')
+            document.getElementById('slider_toggle').style.display = 'block';
+        }else{
+            document.getElementById('slider_toggle').style.display = 'none';
+        }
     });
 
 }
@@ -201,6 +209,8 @@ function drawStuff(info, corEmojis = null) {
         drawEmojis = corEmojis;
     }
 
+    console.log('de length : ' + drawEmojis.length)
+
     imageInfo.nbrEmojis = Math.round((imageInfo.fullWidth * imageInfo.fullHeight) / (imageInfo.sampleSize * imageInfo.sampleSize));
     imageInfo.dimension = imageInfo.fullWidth + ' x ' + imageInfo.fullHeight;
 
@@ -214,7 +224,6 @@ function drawStuff(info, corEmojis = null) {
         imageInfo.nbrEmojis = imageInfo.nbrEmojis*5;
 
         let offsetValue = document.getElementById('sample_slider').value;
-        console.log(offsetValue);
 
         for (let u = 0; u < 5; u++) {
 
@@ -236,7 +245,6 @@ function drawStuff(info, corEmojis = null) {
             draw(x, y, offsetX, offsetY)
         }
     } else if (drawnSamples === 'one') {
-        console.log(info.sampleSize);
 
         let offsetX = 0;
         let offsetY = 0;

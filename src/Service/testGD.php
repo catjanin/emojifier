@@ -18,7 +18,7 @@ class testGD
         $imageSize = getimagesize($src);
         $width = $imageSize[0];
         $height = $imageSize[1];
-        $sampleSize = $this->roundSample($userSample, $width);
+        $sampleSize = $this->roundSample($userSample, $width, $height);
 
         $this->fullInfo['width'] = round($width/$sampleSize);
         $this->fullInfo['height'] = round($height/$sampleSize);
@@ -59,16 +59,28 @@ class testGD
         return $colors;
     }
 
-    public function roundSample($userSample, $width)
+    public function roundSample($userSample, $width, $height)
     {
-        $trueSample = $userSample;
-/*
-        for ($i = $userSample; $i < $width; $i++) {
-            if (($width+1) % $i === 0) {
+
+        if($userSample <= 1){
+            $userSample = 2;
+        }
+
+        if($width > $height){
+            $max = $width;
+        }else{
+            $max = $height;
+        }
+
+        for ($i = $userSample; $i < $max; $i++) {
+            if (($width % $i === 0) || ($height % $i === 0)) {
                 $trueSample = $i;
                 break;
             }
-        }*/
+        }
+
+
+
 
         return $trueSample;
     }
