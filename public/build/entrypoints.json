@@ -1,0 +1,88 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~app~numInc.js",
+        "/build/vendors~app.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "canvasLogic": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~emojiList~emojiSearch~modalUpload.js",
+        "/build/vendors~canvasLogic~gallerySearch~modalUpload~nearestColor.js",
+        "/build/vendors~canvasLogic~nearestColor.js",
+        "/build/canvasLogic~nearestColor.js",
+        "/build/canvasLogic.js"
+      ]
+    },
+    "numInc": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~app~numInc.js",
+        "/build/vendors~numInc.js",
+        "/build/numInc.js"
+      ]
+    },
+    "emojiList": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~emojiList~emojiSearch~modalUpload.js",
+        "/build/vendors~emojiList.js",
+        "/build/emojiList.js"
+      ]
+    },
+    "nearestColor": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~gallerySearch~modalUpload~nearestColor.js",
+        "/build/vendors~canvasLogic~nearestColor.js",
+        "/build/canvasLogic~nearestColor.js",
+        "/build/nearestColor.js"
+      ]
+    },
+    "emojiGet": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~emojiGet.js",
+        "/build/emojiGet.js"
+      ]
+    },
+    "emojiSearch": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~emojiList~emojiSearch~modalUpload.js",
+        "/build/emojiSearch.js"
+      ]
+    },
+    "modalUpload": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~emojiList~emojiSearch~modalUpload.js",
+        "/build/vendors~canvasLogic~gallerySearch~modalUpload~nearestColor.js",
+        "/build/modalUpload.js"
+      ]
+    },
+    "gallerySearch": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~canvasLogic~emojiGet~emojiList~emojiSearch~gallerySearch~modalUpload~nearestColor~numInc.js",
+        "/build/vendors~canvasLogic~gallerySearch~modalUpload~nearestColor.js",
+        "/build/vendors~gallerySearch.js",
+        "/build/gallerySearch.js"
+      ]
+    }
+  }
+}

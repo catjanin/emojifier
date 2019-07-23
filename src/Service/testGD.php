@@ -65,7 +65,7 @@ class testGD
         /*
         for ($i = $userSample; $i < $width; $i++) {
             if (($width+1) % $i === 0) {
-                $trueSample = $i;
+                $trueSamplge = $i;
                 break;
             }
         }*/
