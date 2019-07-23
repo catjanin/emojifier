@@ -171,8 +171,8 @@ input[type=number]
   transition: all .4s;
 }
 
-.btn_make_image:hover, .button_save_image:hover {
-  box-shadow: inset 0px 0px 173px -91px rgba(255,255,255,0.54);
+.btn_make_image:hover, .button_save_image:hover, .button_delete:hover, .button_close:hover {
+  box-shadow: inset 0px 0px 173px -91px rgba(255,255,255,0.40);
   color: #FFF;
 }
 
@@ -219,6 +219,17 @@ input[type=number]
   border-radius: 25px;
   color: #FFF;
   background-color: $main_accent_color;
+  transition: all .4s;
+  text-decoration: none;
+}
+
+.button_delete {
+  display: inline-block;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 25px;
+  color: #FFF;
+  background-color: #ff3a1c;
   transition: all .4s;
   text-decoration: none;
 }

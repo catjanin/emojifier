@@ -42,18 +42,18 @@
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">{{ image.commonName }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <img class="card-img-top gallery_card_img rounded"
+                            <div class="modal-body text-center">
+                                <img class="card-img-top gallery_card_img_modal rounded"
                                      src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="/delete/{{ image.id }}">DELETEETET</a>
+                                <button type="button" class="button_close" data-dismiss="modal">Close</button>
+                                <a class="button_delete" href="/delete/{{ image.id }}">Delete</a>
                             </div>
                         </div>
                     </div>

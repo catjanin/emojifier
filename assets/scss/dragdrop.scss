@@ -32,7 +32,8 @@
     z-index: -1;
     margin: -$border; /* !importanté */
     border-radius: inherit; /* !importanté */
-    background: linear-gradient(135deg, $fuschia 20%, $main_accent_color 100%);
+    background: rgb(236,78,32);
+    /*background: radial-gradient(circle, rgba(236,78,32,1) 65%, rgba(0,0,0,1) 100%);*/
   }
 }
 
