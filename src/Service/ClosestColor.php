@@ -4,9 +4,9 @@ namespace App\Service;
 
 Class ClosestColor
 {
+
     public function NearestColor($givenColor, $palette)
     {
-
         // split into RGB, if not already done
         $givenColorRGB = is_array($givenColor) ? $givenColor : $this->str2rgb($givenColor);
         $min = 0xffff;
@@ -24,7 +24,7 @@ Class ClosestColor
             }
         }
 
-        return $palette[$return];
+        return $return;
     }
 
     public function rgb2lab($rgb)
@@ -39,23 +39,24 @@ Class ClosestColor
         #$xr = 0.95047; $yr = 1.0; $zr = 1.08883;
 
         // RGB to XYZ
-        $rgb[0] = $rgb[0] / 255; //R 0..1
-        $rgb[1] = $rgb[1] / 255; //G 0..1
-        $rgb[2] = $rgb[2] / 255; //B 0..1
+        //var_dump($rgb);
+        $rgb['red'] = $rgb['red'] / 255; //R 0..1
+        $rgb['green'] = $rgb['green'] / 255; //G 0..1
+        $rgb['blue'] = $rgb['blue'] / 255; //B 0..1
 
         // assuming sRGB (D65)
-        $rgb[0] = ($rgb[0] <= 0.04045) ? ($rgb[0] / 12.92) : pow(($rgb[0] + 0.055) / 1.055, 2.4);
-        $rgb[1] = ($rgb[1] <= 0.04045) ? ($rgb[1] / 12.92) : pow(($rgb[1] + 0.055) / 1.055, 2.4);
-        $rgb[2] = ($rgb[2] <= 0.04045) ? ($rgb[2] / 12.92) : pow(($rgb[2] + 0.055) / 1.055, 2.4);
+        $rgb['red'] = ($rgb['red'] <= 0.04045) ? ($rgb['red'] / 12.92) : pow(($rgb['red'] + 0.055) / 1.055, 2.4);
+        $rgb['green'] = ($rgb['green'] <= 0.04045) ? ($rgb['green'] / 12.92) : pow(($rgb['green'] + 0.055) / 1.055, 2.4);
+        $rgb['blue'] = ($rgb['blue'] <= 0.04045) ? ($rgb['blue'] / 12.92) : pow(($rgb['blue'] + 0.055) / 1.055, 2.4);
 
         // sRGB D50
-        $x = 0.4360747 * $rgb[0] + 0.3850649 * $rgb[1] + 0.1430804 * $rgb[2];
-        $y = 0.2225045 * $rgb[0] + 0.7168786 * $rgb[1] + 0.0606169 * $rgb[2];
-        $z = 0.0139322 * $rgb[0] + 0.0971045 * $rgb[1] + 0.7141733 * $rgb[2];
+        $x = 0.4360747 * $rgb['red'] + 0.3850649 * $rgb['green'] + 0.1430804 * $rgb['blue'];
+        $y = 0.2225045 * $rgb['red'] + 0.7168786 * $rgb['green'] + 0.0606169 * $rgb['blue'];
+        $z = 0.0139322 * $rgb['red'] + 0.0971045 * $rgb['green'] + 0.7141733 * $rgb['blue'];
         // sRGB D65
-        /*$x =  0.412453*$rgb[0] + 0.357580*$rgb[1] + 0.180423*$rgb[2];
-        $y =  0.212671*$rgb[0] + 0.715160*$rgb[1] + 0.072169*$rgb[2];
-        $z =  0.019334*$rgb[0] + 0.119193*$rgb[1] + 0.950227*$rgb[2];*/
+        /*$x =  0.412453*$rgb['red'] + 0.357580*$rgb['green'] + 0.180423*$rgb['blue'];
+        $y =  0.212671*$rgb['red'] + 0.715160*$rgb['green'] + 0.072169*$rgb['blue'];
+        $z =  0.019334*$rgb['red'] + 0.119193*$rgb['green'] + 0.950227*$rgb['blue'];*/
 
         // XYZ to Lab
         $xr = $x / $xr;
@@ -106,11 +107,13 @@ Class ClosestColor
     {
 
         $str = preg_replace('~[^0-9a-f]~', '', $str);
-        $rgb = str_split($str, 2);
+        $rgbSplice = str_split($str, 2);
+        $rgb = [];
 
+        $strArr = ['red', 'green', 'blue'];
 
         for ($i = 0; $i < 3; $i++) {
-            $rgb[$i] = intval($rgb[$i], 16);
+            $rgb[$strArr[$i]] = intval($rgbSplice[$i], 16);
         }
 
         return $rgb;

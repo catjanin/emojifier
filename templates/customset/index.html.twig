@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 choose-emoji">
+                <div class="choose_emoji_container">
+                <table class="fixed_header">
+                    <div class="emoji_search_container">
+                        <label>🔎
+                            <input type="text" id="form_search_emojis">
+                        </label>
+                    </div>
+                    <tbody>
+                    {% for index, emoji in emojis %}
+                        {% if index % 5 == 0 and index < emojis|length - 5 %}
+                        <tr>
+                            <td class="td_emoji text-center">{{ emojis[index].char }}</td>
+                            <td class="td_emoji text-center">{{ emojis[index+1].char }}</td>
+                            <td class="td_emoji text-center">{{ emojis[index+2].char }}</td>
+                            <td class="td_emoji text-center">{{ emojis[index+3].char }}</td>
+                            <td class="td_emoji text-center">{{ emojis[index+4].char }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="col-6">
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('emojiSearch') }}
+{% endblock %}
+

@@ -1,17 +1,194 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
 {% block body %}
-    <h1>Hello</h1>
-    <button id="createImage">create image</button>
-{{ form_widget(form.emoji_size, {'type':'number'}) }}
-    {{ form_widget(form.image_file) }}
-    {{ form_label(form.algo_2) }}
-    {{ form_widget(form.algo_2) }}
-    {{ form_label(form.x4_samples) }}
-    {{ form_widget(form.x4_samples) }}
+    {% include '_navbar.html.twig' %}
+
+    <div class="container-fluid p-0">
+        <div class="row mr-0">
+            <div class="col-3" id="tool_container">
+                <div id="toolContainer" class="tool_wrapper height-94vh">
+                    <ul>
+                        <li class="tool_li pt-5">
+                            <button class="btn_make_image" id="createImage">Emojify !</button>
+                        </li>
+                        <li class="tool_li pt-5">
+                            <div class="quantity">
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline">
+                                        {{ form_widget(form.emoji_size, {'type':'number'}) }}
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <div class="number_inc_label">
+                                            emoji size
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="tool_li pt-4">
+                            <div>
+                                <label class="switch">
+                                    {{ form_widget(form.algo_2) }}
+                                    <span class="slider"></span>
+                                </label>
+                                &nbsp algo 2
+                            </div>
+                        </li>
+                        <li class="tool_li pt-4 pb-4" id="x5_toggle">
+                            <div>
+                                <label class="switch">
+                                    {{ form_widget(form.x4_samples) }}
+                                    <span class="slider"></span>
+                                </label>
+                                &nbsp x5 samples
+                            </div>
+                        </li>
+                        <li class="tool_li"  id="slider_toggle">
+                            <div class="pt-2">
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline">
+                                        <input class="nbr_field_offset" type="text" value="1" name="sample-number" id="sample_number">
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <label class="label_slider_offset">Samples offset
+                                            <input class="slider_offset" type="range" name="sample-slider" id="sample_slider" value="1"
+                                                   min="0" max="10">
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="tool_li pt-3">
+                            <ul class="p-0">
+                                <li class="list_inline">
+                                    <a href="#" class="button_save_image" id="dl_canvas">download</a>
+                                </li>
+                                <li class="list_inline ml-3">
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                        <button type="button" id="modal_show" class="button_save_image ml-auto mr-1"
+                                                data-toggle="modal" data-target="#uploadModal">upload
+                                        </button>
+                                    {% else %}
+                                        <a class="button_save_image" href="{{ path('app_login') }}">upload</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="tool_li pt-5">
+                            <div>
+                                <ul class="inline_ul p-0">
+                                    <li class="list_inline ml-0">
+                                        <div id="image_dimension">
+
+                                        </div>
+                                    </li>
+                                    <li class="list_inline ml-3">
+                                        <div id="image_nbrEmojis">
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li id="dragdrop_li" class="tool_li pt-4">
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-9" id="canvas_zone">
+                <div id="canvas_container">
+                    <div id="drop_file_zone" class="dropZone">
+                        <div id="drag_upload_file" class="dragUpload">
+                            <p class="delete_me">Drop image here</p>
+                            <p class="delete_me">or</p>
+                            <p><input id="file_exp" type="button" class="square_btn" value="Select File"></p>
+                            <input type="file" id="selectfile">
+                            <div id="loader_container">
+                                <div class="loader_pre mt-3" id="load_"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade modal_outer_style" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl modal_style" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="x">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <div id="upload_form_container" class="modal_title">
+                                    <label class="mt-4">Image name :
+                                        <input class="name_input" type="text" id="image_upload_name">
+                                    </label>
+                                    <div class="categ_container mt-4">
+                                    <div>
+                                        Category :
+                                    </div>
+                                    <div class="mt-3">
+                                        <input type="radio" id="huey" name="someRadio" value="nerd"
+                                               checked>
+                                        <label for="huey">NERDD</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="dewey" name="someRadio" value="nature">
+                                        <label for="dewey">li abres li oiso</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="louie" name="someRadio" value="art">
+                                        <label for="louie">aesthetic</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="nope" name="someRadio" value="other">
+                                        <label for="nope">otherstuffididntthinkabout;(</label>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div id="modal_image_wrap">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button_close" data-dismiss="modal">Close</button>
+                    <button type="button" id="modal_upload_button" class="button_save_image" data-dismiss="modal">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
 {% block javascripts %}
-    <script src="js/nearestColor.js"></script>
-    <script src="js/emojiList.js"></script>
-    <script src="js/canvasLogic.js"></script>
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('emojiList') }}
+    {{ encore_entry_script_tags('nearestColor') }}
+    {{ encore_entry_script_tags('canvasLogic') }}
+    {{ encore_entry_script_tags('numInc') }}
+    {{ encore_entry_script_tags('emojiGet') }}
+    {{ encore_entry_script_tags('modalUpload') }}
 {% endblock %}

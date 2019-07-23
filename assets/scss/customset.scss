@@ -1,0 +1,43 @@
+
+
+.choose_emoji_container {
+  height: 90vh;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.fixed_header{
+  width: 80%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  height: 90vh;
+}
+
+.fixed_header thead tr {
+  display: block;
+}
+
+.fixed_header thead {
+  background: black;
+  color:#fff;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
+}
+
+.td_emoji {
+  font-size: 200%;
+}
+

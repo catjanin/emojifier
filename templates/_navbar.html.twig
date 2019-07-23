@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-sm navbar_bg justify-content-end">
+    <a class="navbar-brand" href="/">Home</a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="button_save_image ml-auto mr-1" href="{{ path('logout') }}">Logout</a>
+    {% endif %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+        <a class="button_save_image ml-auto mr-3" href="{{ path('app_register') }}">Register</a>
+        <a class="button_save_image mr-1" href="{{ path('app_login') }}">Login</a>
+    {% endif %}
+    <div>&nbsp&nbsp</div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+        <ul class="navbar-nav text-right">
+            <li class="nav-item active">
+                <a class="nav-link" href="/gallery">Gallery</a>
+            </li>
+            <li class="nav-item active">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a class="nav-link" href="/my-uploads">My uploads</a>
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+                    <a class="nav-link" href="/login">My uploads</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>

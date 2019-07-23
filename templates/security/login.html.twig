@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class=" mb-5 text-center mt-5">Login</h1>
+        <form method="post">
+            <div class="bloc-beige col-8 offset-2">
+                {% for message in app.flashes('updated-password') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="form-row justify-content-center">
+                    <label for="inputUsername" class="sr-only">Account</label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                            placeholder="Account" class="login_input" required>
+                </div>
+                <div class="form-row justify-content-center">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="password" id="inputPassword"
+                           placeholder="Password" class="login_input mt-3" required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}">
+                </div>
+                <div class="form-row justify-content-center mt-4">
+                    <button class="button_save_image" type="submit">
+                        Se connecter
+                    </button>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <a class="txtItalic" href="{{ path('app_forgotten_password') }}">Forgotten password ?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

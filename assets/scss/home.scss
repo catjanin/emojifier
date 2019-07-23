@@ -1,0 +1,452 @@
+@import "_vars";
+
+body {
+  background-color: $bg_color;
+}
+
+canvas {
+  background-color: #fff;
+}
+
+.tool_li {
+  //margin-top: 30px;
+  color: white;
+}
+
+.tool_wrapper {
+
+}
+
+.switch input {
+  display:none;
+}
+.switch {
+  display:inline-block;
+  width:60px;
+  height:30px;
+  margin:8px;
+  transform:translateY(50%);
+  position:relative;
+}
+
+.slider {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  border-radius:30px;
+  box-shadow:0 0 0 2px $main_accent_color, 0 0 4px $main_accent_color;
+  cursor:pointer;
+  border:4px solid transparent;
+  overflow:hidden;
+  transition:.4s;
+}
+.slider:before {
+  position:absolute;
+  content:"";
+  width:100%;
+  height:100%;
+  background: $main_accent_color;
+  border-radius:30px;
+  transform:translateX(-30px);
+  transition:.4s;
+}
+
+input:checked + .slider:before {
+  transform:translateX(30px);
+  background: $fuschia;
+}
+input:checked + .slider {
+  box-shadow:0 0 0 2px $fuschia,0 0 2px $fuschia;
+}
+
+.quantity {
+  position: relative;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+
+.quantity input {
+  width: 80px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border: 2px solid $main_accent_color;
+  border-radius: 10px;
+  background-color: transparent;
+  color: white;
+}
+
+.quantity input:focus {
+  outline: 0;
+}
+
+.nbr_field_offset {
+  width: 80px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 14px;
+  border: 2px solid $main_accent_color;
+  border-radius: 10px;
+  background-color: transparent;
+  color: white;
+}
+
+.nbr_field_offset:focus {
+  outline: 0;
+}
+
+.slider_offset {
+  width: 120px;
+}
+
+.label_slider_offset {
+  max-width: 150px;
+}
+
+.quantity-nav {
+  position: relative;
+  height: 42px;
+  margin-left: 75px;
+}
+
+.quantity-button {
+  position: relative;
+  cursor: pointer;
+  color: $fuschia;
+  font-size: 120%;
+  width: 20px;
+  margin-right: 5px;
+  text-align: center;
+  line-height: 1.7;
+  transform: translateX(-100%);
+  user-select: none;
+}
+
+.quantity-button.quantity-up {
+  position: absolute;
+  height: 50%;
+  top: 3px;
+  user-select: none;
+  line-height: 1;
+}
+
+.quantity-button.quantity-down {
+  position: absolute;
+  bottom: -2px;
+  height: 50%;
+  font-size: 135%;
+  user-select: none;
+  line-height: 1;
+}
+
+.btn_make_image {
+  display: inline-block;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #FFF;
+  font-size: 120%;
+  background-color: $fuschia;
+  transition: all .4s;
+}
+
+.btn_make_image:hover, .button_save_image:hover, .button_delete:hover, .button_close:hover {
+  box-shadow: inset 0px 0px 173px -91px rgba(255,255,255,0.40);
+  color: #FFF;
+}
+
+.inline_ul {
+  display: flex;
+  align-items: center;
+}
+
+.height-100 {
+  height: 100% !important
+}
+
+.height-94vh {
+  height: 94vh !important
+}
+
+#canvas_container {
+  position: relative;
+  height: 94vh;
+}
+
+.centered_canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button_save_image {
+  display: inline-block;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 25px;
+  color: #FFF;
+  background-color: $fuschia;
+  transition: all .4s;
+  text-decoration: none;
+}
+
+.button_close {
+  display: inline-block;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 25px;
+  color: #FFF;
+  background-color: $main_accent_color;
+  transition: all .4s;
+  text-decoration: none;
+}
+
+.button_delete {
+  display: inline-block;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 25px;
+  color: #FFF;
+  background-color: #ff3a1c;
+  transition: all .4s;
+  text-decoration: none;
+}
+
+.loader {
+  border: 16px solid transparent;
+  border-radius: 50%;
+  border-top: 16px solid $main_accent_color;
+  border-bottom: 16px solid $main_accent_color;
+  width: 120px;
+  height: 120px;
+  animation: spin_loader 2s linear infinite;
+  z-index: 10;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -60px 0 0 -60px;
+}
+
+.loader_pre {
+  border: 16px solid transparent;
+  border-radius: 50%;
+  border-top: 16px solid $main_accent_color;
+  border-bottom: 16px solid $main_accent_color;
+  width: 20px;
+  height: 20px;
+  animation: spin_loader 2s linear infinite;
+  z-index: 10;
+  margin: 0 auto;
+  display: none;
+}
+
+.loader_pre_side {
+  border: 16px solid transparent;
+  border-radius: 50%;
+  border-top: 16px solid $main_accent_color;
+  border-bottom: 16px solid $main_accent_color;
+  width: 20px;
+  margin-left: 90%;
+  height: 20px;
+  animation: spin_loader 2s linear infinite;
+  z-index: 10;
+  display: block;
+}
+
+.list_inline {
+  display: inline;
+}
+
+.modal_style {
+  background-color: $bg_color;
+  border-radius: 30px;
+}
+
+.modal-content {
+  background-color: $bg_color;
+  color: $stark;
+  border-radius: 30px;
+}
+
+.modal-header {
+  border-bottom: 1px solid $main_accent_color;
+  border-radius: 40px;
+}
+
+.modal-footer {
+  border-top: 1px solid $main_accent_color;
+  border-radius: 40px;
+}
+
+.modal_title {
+  text-align: center;
+}
+
+.categ_container {
+  text-align: left;
+}
+
+.x {
+  color: $stark;
+}
+
+.input_container_register input {
+  float: right;
+  margin-right: 35%;
+}
+
+
+
+
+
+
+
+#loader_container {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#tool_container, #canvas_container {
+  height: 70vh;
+}
+
+#sample_number {
+  width: 50px;
+}
+
+#slider_toggle {
+  display: none;
+}
+
+
+
+
+@keyframes spin_loader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+// slider lol
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 120px;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 120px;
+  height: 12.8px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: $main_accent_color;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 19px;
+  border-radius: 50%;
+  background: $fuschia;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3.6px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: $main_accent_color;
+}
+input[type=range]::-moz-range-track {
+  width: 120px;
+  height: 12.8px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: $main_accent_color;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 19px;
+  border-radius: 50%;
+  background: $fuschia;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 120px;
+  height: 12.8px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 20px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: $main_accent_color;
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: $main_accent_color;
+  border: 0px solid $main_accent_color;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 19px;
+  border-radius: 50%;
+  background: $fuschia;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: $main_accent_color;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: $main_accent_color;
+}
+
+input[type=range]{
+  background-color: transparent;
+}
+
+

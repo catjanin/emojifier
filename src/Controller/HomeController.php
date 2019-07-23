@@ -27,11 +27,8 @@ class HomeController extends AbstractController
                     'min'  => 2,
                     'max'  => 200,
                     'step' => 1,
+                    'value' => 8
                 ),
-            ])
-            ->add('image_file', FileType::class, [
-                'mapped' => false,
-                'label' => 'choose image (jpg)'
             ])
             ->add('algo_2', CheckboxType::class, [
                 'label' => 'algo 2',

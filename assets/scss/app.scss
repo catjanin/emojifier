@@ -1,0 +1,40 @@
+@import "~bootstrap/scss/bootstrap";
+@import "home";
+@import "navbar";
+@import "dragdrop";
+@import "login";
+@import "register";
+@import "customset";
+@import "modalupload";
+@import "gallery";
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+li {
+  list-style-type: none;
+}
+
+*:not(input):not(select) {
+  color: $stark;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+  text-decoration: none;
+}
+
+input {
+  border-radius: 20px;
+  border: none;
+  padding: 5px;
+}
+
+body {
+  background-color: $bg_color;
+}
+
+
+
+
+
+

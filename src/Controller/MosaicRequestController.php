@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\testGD;
 use App\Service\EmojiList;
+use App\Service\EmojiListRGB;
 use App\Service\ClosestColor;
+use App\Service\GetLastUpload;
+use App\Entity\LastUpload;
 
 class MosaicRequestController extends AbstractController
 {
@@ -23,7 +26,7 @@ class MosaicRequestController extends AbstractController
         $requiredAlgo = $_POST['algo'];
         $file = $_FILES['image'];
 
-        $arr_file_types = ['image/jpg', 'image/jpeg'];
+        $arr_file_types = ['image/jpg', 'image/jpeg', 'image/png'];
 
         if (!(in_array($file['type'], $arr_file_types))) {
             return null;
@@ -33,10 +36,12 @@ class MosaicRequestController extends AbstractController
             mkdir('uploads', 0777);
         }
 
-        move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);
+        $uniqName = 'im-' . uniqid() . '.jpg';
 
 
-        return $this->requireEmojification($requiredSample, $file['name'], $requiredAlgo);
+        move_uploaded_file($file['tmp_name'], 'uploads/' . $uniqName);
+
+        return $this->requireEmojification($requiredSample, $uniqName, $requiredAlgo);
 
     }
 
@@ -46,7 +51,6 @@ class MosaicRequestController extends AbstractController
         $emojis = new EmojiList();
         $queryImg = new testGD();
         $closestColor = new ClosestColor();
-
 
         if($requiredAlgo === 'algo_1'){
 
@@ -63,19 +67,13 @@ class MosaicRequestController extends AbstractController
             $emojiList = $emojis->getEmojis();
             $imageColors = $queryImg->getFullColors();
 
-            $emojiColors = array_filter($emojiList, function ($e) {
-                if (strlen($e) === 7 && $e[0] === "#") {
-                    return $e;
-                }
-            });
-
-            foreach ($emojiColors as $key => $val) {
-                $emojiColors[$key] = substr($val, 1);
-            }
+            $emojiColors = array_map(function ($e) {
+                    return $e['regbColor'];
+            },$emojiList);
 
             foreach ($imageColors as $key => $val) {
-                $closest = $closestColor->NearestColor(substr($val, 1), $emojiColors);
-                $emojiToUse[] = $emojiList[array_search('#' . $closest, $emojiList) - 1];
+                $closestIndex = $closestColor->NearestColor(substr($val, 1), $emojiColors);
+                $emojiToUse[] = $emojiList[$closestIndex]['char'];
             }
 
             $image['emojis'] = $emojiToUse;

@@ -1,0 +1,45 @@
+@import '_vars';
+
+.gallery_card_img {
+
+}
+
+.gallery_card_container {
+  cursor: pointer;
+}
+
+.card {
+  word-wrap: unset !important;
+}
+
+.gallery_card_title_container {
+  height: 100%;
+  min-height: 100px;
+  margin: 0 auto;
+}
+
+.gallery_card_title {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%; /* Need a specific value to work */
+}
+
+.gallery_card {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: $bg_color;
+  border: 5px solid $fuschia;
+}
+
+.gallery_card_list_container {
+  text-align: left;
+  bottom: 0px;
+  font-style: italic;
+  color: $main_accent_color;
+}
+
+.gallery_card_img_modal {
+  width: unset;
+  max-width: 80vw;
+}

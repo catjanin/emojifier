@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    {% include '_navbar.html.twig' %}
+    <div class="container-fluid">
+        <h1 class="text-center mt-5 mb-5">Gallery</h1>
+    </div>
+    <div class="text-center">
+        <div class="gallery_searchbar_container">
+            <label>
+                <input type="text" placeholder="Search" class="input_bar" id="gallery_searchbar_input">
+            </label>
+        </div>
+        <div class="mt-4 mb-5">
+            <label for="cat-select">Categories :</label>
+            <select id="cat-select">
+                <option value="all">all</option>
+                <option value="nerd">NERD</option>
+                <option value="nature">Neture</option>
+                <option value="art">Ert</option>
+                <option value="other">other</option>
+            </select>
+        </div>
+    </div>
+    <div class="container-fluid content-row">
+        <div class="row mt-5 pt-4">
+            {% for index, image in images %}
+                <div class="col-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                    <div class="gallery_card_container mx-auto" data-toggle="modal" data-target="modal-{{ index }}">
+                        <div class="card mx-auto text-center gallery_card" data-toggle="modal"
+                             data-target="#modal-{{ index }}">
+                            <img class="card-img-top gallery_card_img rounded"
+                                 src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
+                            <div class="card-body">
+                                <div class="gallery_card_title_container">
+                                    <h2 class="card-title gallery_card_title mb-4">{{ image.commonName }}</h2>
+                                    <div class="gallery_card_list_container">
+                                        <ul class="p-0">
+                                            <li>author : {{ image.author }}</li>
+                                            <li>{{ image.dimension }}</li>
+                                            <li>{{ image.nbrEmojis }}</li>
+                                            {% if image.category != '' %}
+                                                <li class="gallery_categ">category : {{ image.category }}</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modal-{{ index }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ image.commonName }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img class="card-img-top gallery_card_img_modal rounded"
+                                     src="convert-uploads/{{ image.name }}" alt="some_emoji_image">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="button_close" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('gallerySearch') }}
+{% endblock %}
