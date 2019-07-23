@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar_bg justify-content-end">
-    <a class="navbar-brand" href="#">Home</a>
+    <a class="navbar-brand" href="/">Home</a>
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a class="button_save_image ml-auto mr-1" href="{{ path('logout') }}">Logout</a>
     {% endif %}
