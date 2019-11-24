@@ -6,7 +6,7 @@ module.exports = function() {
             const response = await fetch('/getEmojis');
             const json = await response.json();
             console.log(json);
-        }
+        };
 
         request();
 
